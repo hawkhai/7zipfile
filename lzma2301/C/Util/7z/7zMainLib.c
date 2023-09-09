@@ -14,6 +14,11 @@
 #include "../../7zCrc.h"
 #include "../../7zFile.h"
 #include "../../7zVersion.h"
+#include "../../../../include/Extract7z.h"
+
+#include <Shlwapi.h>    
+#include <shlobj.h>
+#pragma comment(lib, "shlwapi.lib")
 
 #ifndef USE_WINDOWS_FILE
 /* for mkdir */
@@ -301,12 +306,13 @@ static char *UIntToStr(char *s, unsigned value, int numDigits)
   return s;
 }
 
+/**
 static void UIntToStr_2(char *s, unsigned value)
 {
   s[0] = (char)('0' + (value / 10));
   s[1] = (char)('0' + (value % 10));
 }
-
+*/
 
 #define PERIOD_4 (4 * 365 + 1)
 #define PERIOD_100 (PERIOD_4 * 25 - 1)
@@ -419,12 +425,15 @@ static WRes Set_File_FILETIME(const UInt16 *name, const FILETIME *mTime)
 
 #endif
 
+/**
 static void NtfsFileTime_to_FILETIME(const CNtfsFileTime *t, FILETIME *ft)
 {
   ft->dwLowDateTime = (DWORD)(t->Low);
   ft->dwHighDateTime = (DWORD)(t->High);
 }
+*/
 
+/**
 static void ConvertFileTimeToString(const CNtfsFileTime *nTime, char *s)
 {
   unsigned year, mon, hour, min, sec;
@@ -473,6 +482,7 @@ static void ConvertFileTimeToString(const CNtfsFileTime *nTime, char *s)
   UIntToStr_2(s, min); s[2] = ':'; s += 3;
   UIntToStr_2(s, sec); s[2] = 0;
 }
+*/
 
 static void PrintLF(void)
 {
@@ -523,6 +533,7 @@ static void PrintError_WRes(const char *message, WRes wres)
   PrintLF();
 }
 
+/**
 static void GetAttribString(UInt32 wa, BoolInt isDir, char *s)
 {
   #ifdef USE_WINDOWS_FILE
@@ -537,12 +548,36 @@ static void GetAttribString(UInt32 wa, BoolInt isDir, char *s)
   s[1] = 0;
   #endif
 }
-
+*/
 
 // #define NUM_PARENTS_MAX 128
 
-int Z7_CDECL main(int numargs, char *args[])
+//int Z7_CDECL main(int numargs, char *args[])
+    /*
+        pSrcFile : .7z文件名（可包含路径）
+        pDstPath : 解压至目标文件夹（必须用绝对路径，目录必须存在，如果为空，直接解压到当前目录）
+    */
+int Z7DLLEXPORT Extract7z(wchar_t* pSrcFile, wchar_t* pDstPath)
 {
+    int useDestPath = 0;
+    wchar_t szDstPath[MAX_PATH] = { 0 };
+
+    if (pSrcFile == NULL) {
+        return -1;
+    }
+    if (pDstPath) {
+        useDestPath = 1;
+        wcscpy_s(szDstPath, MAX_PATH, pDstPath);
+        PathAddBackslash(szDstPath);
+
+        pDstPath = szDstPath;
+        MyCreateDir(pDstPath);
+        if (!PathFileExists(pDstPath))
+        {
+            return -1;
+        }
+    }
+
   ISzAlloc allocImp;
   ISzAlloc allocTempImp;
 
@@ -551,28 +586,10 @@ int Z7_CDECL main(int numargs, char *args[])
   CSzArEx db;
   SRes res;
   UInt16 *temp = NULL;
+  UInt16* destPath = NULL;
   size_t tempSize = 0;
+  size_t destSize = 0;
   // UInt32 parents[NUM_PARENTS_MAX];
-
-  Print("\n7z Decoder " MY_VERSION_CPU " : " MY_COPYRIGHT_DATE "\n\n");
-
-  if (numargs == 1)
-  {
-    Print(
-      "Usage: 7zDec <command> <archive_name>\n\n"
-      "<Commands>\n"
-      "  e: Extract files from archive (without using directory names)\n"
-      "  l: List contents of archive\n"
-      "  t: Test integrity of archive\n"
-      "  x: eXtract files with full paths\n");
-    return 0;
-  }
-
-  if (numargs < 3)
-  {
-    PrintError("incorrect command");
-    return 1;
-  }
 
   #if defined(_WIN32) && !defined(USE_WINDOWS_FILE) && !defined(UNDER_CE)
   g_FileCodePage = AreFileApisANSI() ? CP_ACP : CP_OEMCP;
@@ -588,7 +605,7 @@ int Z7_CDECL main(int numargs, char *args[])
     #ifdef UNDER_CE
       InFile_OpenW(&archiveStream.file, L"\test.7z"); // change it
     #else
-      InFile_Open(&archiveStream.file, args[2]);
+      InFile_OpenW(&archiveStream.file, pSrcFile);
     #endif
     if (wres != 0)
     {
@@ -627,18 +644,8 @@ int Z7_CDECL main(int numargs, char *args[])
   
   if (res == SZ_OK)
   {
-    char *command = args[1];
-    int listCommand = 0, testCommand = 0, fullPaths = 0;
-    
-    if (strcmp(command, "l") == 0) listCommand = 1;
-    else if (strcmp(command, "t") == 0) testCommand = 1;
-    else if (strcmp(command, "e") == 0) { }
-    else if (strcmp(command, "x") == 0) { fullPaths = 1; }
-    else
-    {
-      PrintError("incorrect command");
-      res = SZ_ERROR_FAIL;
-    }
+    int listCommand = 0, testCommand = 0, fullPaths = 1;
+
 
     if (res == SZ_OK)
     {
@@ -685,41 +692,6 @@ int Z7_CDECL main(int numargs, char *args[])
         }
         */
 
-        if (listCommand)
-        {
-          char attr[8], s[32], t[32];
-          UInt64 fileSize;
-
-          GetAttribString(SzBitWithVals_Check(&db.Attribs, i) ? db.Attribs.Vals[i] : 0, isDir, attr);
-
-          fileSize = SzArEx_GetFileSize(&db, i);
-          UInt64ToStr(fileSize, s, 10);
-          
-          if (SzBitWithVals_Check(&db.MTime, i))
-            ConvertFileTimeToString(&db.MTime.Vals[i], t);
-          else
-          {
-            size_t j;
-            for (j = 0; j < 19; j++)
-              t[j] = ' ';
-            t[j] = '\0';
-          }
-          
-          Print(t);
-          Print(" ");
-          Print(attr);
-          Print(" ");
-          Print(s);
-          Print("  ");
-          res = PrintString(temp);
-          if (res != SZ_OK)
-            break;
-          if (isDir)
-            Print("/");
-          PrintLF();
-          continue;
-        }
-
         Print(testCommand ?
             "T ":
             "- ");
@@ -745,7 +717,27 @@ int Z7_CDECL main(int numargs, char *args[])
           size_t processedSize;
           size_t j;
           UInt16 *name = (UInt16 *)temp;
-          const UInt16 *destPath = (const UInt16 *)name;
+          //const UInt16 *destPath = (const UInt16 *)name;
+
+          if (useDestPath) {
+              if (destPath) {
+                  SzFree(NULL, destPath);
+              }
+              destSize = wcslen(pDstPath);
+              destSize += tempSize;
+              destPath = (UInt16*)SzAlloc(NULL, destSize * sizeof(destPath[0]));
+              if (!destPath)
+              {
+                  res = SZ_ERROR_MEM;
+                  break;
+              }
+              wcscpy_s(destPath, MAX_PATH, pDstPath);
+              wcscat_s(destPath, MAX_PATH, temp);
+              name = destPath + wcslen(pDstPath);
+          }
+          else {
+              destPath = (UInt16*)name;
+          }
  
           for (j = 0; name[j] != 0; j++)
             if (name[j] == '/')
@@ -861,6 +853,9 @@ int Z7_CDECL main(int numargs, char *args[])
   SzArEx_Free(&db, &allocImp);
   ISzAlloc_Free(&allocImp, lookStream.buf);
 
+  if (useDestPath) {
+      SzFree(NULL, destPath);
+  }
   File_Close(&archiveStream.file);
   
   if (res == SZ_OK)
