@@ -731,8 +731,8 @@ int /*MY_CDECL*/ extract_7z(const wchar_t* pSrcFile, const wchar_t* pDstPath) {
                             res = SZ_ERROR_MEM;
                             break;
                         }
-                        wcscpy_s(destPath, MAX_PATH, pDstPath);
-                        wcscat_s(destPath, MAX_PATH, temp);
+                        wcscpy_s(destPath, destSize + 1, pDstPath);
+                        wcscat_s(destPath, destSize + 1, temp);
                         name = destPath + wcslen(pDstPath);
                     }
                     else
@@ -1000,8 +1000,8 @@ int Z7DLLEXPORT Extract7z(const wchar_t* pSrcFile, const wchar_t* pDstPath)
                         res = SZ_ERROR_MEM;
                         break;
                     }
-                    wcscpy_s(destPathSrc, MAX_PATH, pDstPath);
-                    wcscat_s(destPathSrc, MAX_PATH, tempstr);
+                    wcscpy_s(destPathSrc, destSize + 1, pDstPath);
+                    wcscat_s(destPathSrc, destSize + 1, tempstr);
                     name = destPathSrc + wcslen(pDstPath);
                     destPathPtr = destPathSrc;
                 }
