@@ -78,7 +78,7 @@ static int Buf_EnsureSize(CBuf* dest, size_t size)
 #define MY_UTF8_HEAD(n, val) ((Byte)(MY_UTF8_START(n) + (val >> (6 * (n)))))
 #define MY_UTF8_CHAR(n, val) ((Byte)(0x80 + (((val) >> (6 * (n))) & 0x3F)))
 
-static size_t Utf16_To_Utf8_Calc(const UInt16* src, const UInt16* srcLim)
+static size_t Utf16_To_Utf8_Calc(const wchar_t* src, const wchar_t* srcLim)
 {
     size_t size = 0;
     for (;;)
@@ -114,7 +114,7 @@ static size_t Utf16_To_Utf8_Calc(const UInt16* src, const UInt16* srcLim)
     }
 }
 
-static Byte* Utf16_To_Utf8(Byte* dest, const UInt16* src, const UInt16* srcLim)
+static Byte* Utf16_To_Utf8(Byte* dest, const wchar_t* src, const wchar_t* srcLim)
 {
     for (;;)
     {
@@ -161,7 +161,7 @@ static Byte* Utf16_To_Utf8(Byte* dest, const UInt16* src, const UInt16* srcLim)
     }
 }
 
-static SRes Utf16_To_Utf8Buf(CBuf* dest, const UInt16* src, size_t srcLen)
+static SRes Utf16_To_Utf8Buf(CBuf* dest, const wchar_t* src, size_t srcLen)
 {
     size_t destLen = Utf16_To_Utf8_Calc(src, src + srcLen);
     destLen += 1;
@@ -173,7 +173,7 @@ static SRes Utf16_To_Utf8Buf(CBuf* dest, const UInt16* src, size_t srcLen)
 
 #endif
 
-static SRes Utf16_To_Char(CBuf* buf, const UInt16* s
+static SRes Utf16_To_Char(CBuf* buf, const wchar_t* s
 #ifndef MY_USE_UTF8
     , UINT codePage
 #endif
@@ -216,7 +216,7 @@ static UINT g_FileCodePage = CP_ACP;
 #define MY_FILE_CODE_PAGE_PARAM
 #endif
 
-static WRes MyCreateDir(const UInt16* name)
+static WRes MyCreateDir(const wchar_t* name)
 {
 #ifdef USE_WINDOWS_FILE
 
@@ -242,7 +242,7 @@ static WRes MyCreateDir(const UInt16* name)
 #endif
 }
 
-static WRes OutFile_OpenUtf16(CSzFile* p, const UInt16* name)
+static WRes OutFile_OpenUtf16(CSzFile* p, const wchar_t* name)
 {
 #ifdef USE_WINDOWS_FILE
     return OutFile_OpenW(p, (LPCWSTR)name);
@@ -258,7 +258,7 @@ static WRes OutFile_OpenUtf16(CSzFile* p, const UInt16* name)
 }
 
 
-static SRes PrintString(const UInt16* s)
+static SRes PrintString(const wchar_t* s)
 {
     CBuf buf;
     SRes res;
@@ -406,7 +406,7 @@ static void FILETIME_To_timespec(const FILETIME* ft, struct MY_ST_TIMESPEC* ts)
     }
 }
 
-static WRes Set_File_FILETIME(const UInt16* name, const FILETIME* mTime)
+static WRes Set_File_FILETIME(const wchar_t* name, const FILETIME* mTime)
 {
     struct timespec times[2];
 
@@ -648,7 +648,7 @@ int /*MY_CDECL*/ extract_7z(const wchar_t* pSrcFile, const wchar_t* pDstPath) {
                 {
                     SzFree(NULL, temp);
                     tempSize = len;
-                    temp = (wchar_t*)SzAlloc(NULL, tempSize * sizeof(temp[0]));
+                    temp = (wchar_t*)SzAlloc(NULL, (tempSize + 1) * sizeof(wchar_t));
                     if (!temp)
                     {
                         res = SZ_ERROR_MEM;
@@ -725,7 +725,7 @@ int /*MY_CDECL*/ extract_7z(const wchar_t* pSrcFile, const wchar_t* pDstPath) {
                         SzFree(NULL, destPath);
                         destSize = wcslen(pDstPath);
                         destSize += tempSize;
-                        destPath = (wchar_t*)SzAlloc(NULL, destSize * sizeof(destPath[0]));
+                        destPath = (wchar_t*)SzAlloc(NULL, (destSize + 1) * sizeof(wchar_t));
                         if (!destPath)
                         {
                             res = SZ_ERROR_MEM;
@@ -857,7 +857,7 @@ int Z7DLLEXPORT Extract7z(const wchar_t* pSrcFile, const wchar_t* pDstPath)
     CLookToRead2 lookStream;
     CSzArEx db;
     SRes res;
-    wchar_t* temp = NULL;
+    wchar_t* tempstr = NULL;
     wchar_t* destPathSrc = NULL;
     wchar_t* destPathPtr = NULL;
     size_t tempSize = 0;
@@ -944,17 +944,17 @@ int Z7DLLEXPORT Extract7z(const wchar_t* pSrcFile, const wchar_t* pDstPath)
 
             if (len > tempSize)
             {
-                SzFree(NULL, temp);
+                SzFree(NULL, tempstr);
                 tempSize = len;
-                temp = (wchar_t*)SzAlloc(NULL, tempSize * sizeof(temp[0]));
-                if (!temp)
+                tempstr = (wchar_t*)SzAlloc(NULL, (tempSize + 1) * sizeof(wchar_t));
+                if (!tempstr)
                 {
                     res = SZ_ERROR_MEM;
                     break;
                 }
             }
 
-            SzArEx_GetFileNameUtf16(&db, i, temp);
+            SzArEx_GetFileNameUtf16(&db, i, tempstr);
             /*
             if (SzArEx_GetFullNameUtf16_Back(&db, i, temp + len) != temp)
             {
@@ -966,7 +966,7 @@ int Z7DLLEXPORT Extract7z(const wchar_t* pSrcFile, const wchar_t* pDstPath)
             Print(testCommand ?
                 "T " :
                 "- ");
-            res = PrintString(temp);
+            res = PrintString(tempstr);
             if (res != SZ_OK)
                 break;
 
@@ -987,23 +987,21 @@ int Z7DLLEXPORT Extract7z(const wchar_t* pSrcFile, const wchar_t* pDstPath)
                 CSzFile outFile;
                 size_t processedSize;
                 size_t j;
-                wchar_t* name = (wchar_t*)temp;
-                //const wchar_t *destPath = (const wchar_t *)name;
+                wchar_t* name = (wchar_t*)tempstr;
+                //const wchar_t* destPath = (const wchar_t*)name;
 
                 if (useDestPath) {
-                    if (destPathSrc) {
-                        SzFree(NULL, destPathSrc);
-                    }
+                    SzFree(NULL, destPathSrc);
                     destSize = wcslen(pDstPath);
                     destSize += tempSize;
-                    destPathSrc = (wchar_t*)SzAlloc(NULL, (destSize + 10) * sizeof(destPathSrc[0]));
+                    destPathSrc = (wchar_t*)SzAlloc(NULL, (destSize + 1) * sizeof(wchar_t));
                     if (!destPathSrc)
                     {
                         res = SZ_ERROR_MEM;
                         break;
                     }
                     wcscpy_s(destPathSrc, MAX_PATH, pDstPath);
-                    wcscat_s(destPathSrc, MAX_PATH, temp);
+                    wcscat_s(destPathSrc, MAX_PATH, tempstr);
                     name = destPathSrc + wcslen(pDstPath);
                     destPathPtr = destPathSrc;
                 }
@@ -1115,17 +1113,17 @@ int Z7DLLEXPORT Extract7z(const wchar_t* pSrcFile, const wchar_t* pDstPath)
                     SetFileAttributesW((LPCWSTR)destPathPtr, attrib);
                 }
 #endif
-                }
-            PrintLF();
             }
+            PrintLF();
+        }
         ISzAlloc_Free(&allocImp, outBuffer);
     }
 
-    SzFree(NULL, temp);
+    SzFree(NULL, tempstr);
     SzArEx_Free(&db, &allocImp);
     ISzAlloc_Free(&allocImp, lookStream.buf);
 
-    if (useDestPath && destPathSrc) {
+    if (useDestPath) {
         SzFree(NULL, destPathSrc);
     }
     File_Close(&archiveStream.file);
