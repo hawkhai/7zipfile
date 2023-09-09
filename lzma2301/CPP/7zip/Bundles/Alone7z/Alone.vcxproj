@@ -68,16 +68,16 @@
       <AdditionalIncludeDirectories>..\..\..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>NDEBUG;WIN32;_CONSOLE;Z7_LARGE_PAGES;Z7_DEVICE_FILE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AssemblerOutput>All</AssemblerOutput>
-      <AssemblerListingLocation>.\Release\</AssemblerListingLocation>
-      <PrecompiledHeaderOutputFile>.\Release\Alone.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\Release\exe\</AssemblerListingLocation>
+      <PrecompiledHeaderOutputFile>.\Release\exe\Alone.pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>StdAfx.h</PrecompiledHeaderFile>
-      <ObjectFileName>.\Release\</ObjectFileName>
-      <ProgramDataBaseFileName>.\Release\</ProgramDataBaseFileName>
+      <ObjectFileName>.\Release\exe\</ObjectFileName>
+      <ProgramDataBaseFileName>.\Release\exe\</ProgramDataBaseFileName>
       <CallingConvention>FastCall</CallingConvention>
     </ClCompile>
     <Midl>
-      <TypeLibraryName>.\Release\Alone.tlb</TypeLibraryName>
+      <TypeLibraryName>.\Release\exe\Alone.tlb</TypeLibraryName>
     </Midl>
     <ResourceCompile>
       <Culture>0x0419</Culture>
@@ -85,7 +85,7 @@
     </ResourceCompile>
     <Bscmake>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <OutputFile>.\Release\Alone.bsc</OutputFile>
+      <OutputFile>.\Release\exe\Alone.bsc</OutputFile>
     </Bscmake>
     <Link>
       <SuppressStartupBanner>true</SuppressStartupBanner>
@@ -105,17 +105,17 @@
       <MinimalRebuild>true</MinimalRebuild>
       <AdditionalIncludeDirectories>..\..\..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_DEBUG;WIN32;_CONSOLE;Z7_LARGE_PAGES;Z7_DEVICE_FILE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AssemblerListingLocation>.\Debug\</AssemblerListingLocation>
-      <PrecompiledHeaderOutputFile>.\Debug\Alone.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\Debug\exe\</AssemblerListingLocation>
+      <PrecompiledHeaderOutputFile>.\Debug\exe\Alone.pch</PrecompiledHeaderOutputFile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>StdAfx.h</PrecompiledHeaderFile>
-      <ObjectFileName>.\Debug\</ObjectFileName>
-      <ProgramDataBaseFileName>.\Debug\</ProgramDataBaseFileName>
+      <ObjectFileName>.\Debug\exe\</ObjectFileName>
+      <ProgramDataBaseFileName>.\Debug\exe\</ProgramDataBaseFileName>
       <CallingConvention>FastCall</CallingConvention>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
     </ClCompile>
     <Midl>
-      <TypeLibraryName>.\Debug\Alone.tlb</TypeLibraryName>
+      <TypeLibraryName>.\Debug\exe\Alone.tlb</TypeLibraryName>
     </Midl>
     <ResourceCompile>
       <Culture>0x0419</Culture>
@@ -123,7 +123,7 @@
     </ResourceCompile>
     <Bscmake>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <OutputFile>.\Debug\Alone.bsc</OutputFile>
+      <OutputFile>.\Debug\exe\Alone.bsc</OutputFile>
     </Bscmake>
     <Link>
       <SuppressStartupBanner>true</SuppressStartupBanner>
