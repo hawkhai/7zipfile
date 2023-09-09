@@ -119,6 +119,6 @@
     <ClCompile Include="Precomp.c">
       <Filter>Spec</Filter>
     </ClCompile>
-    <ClCompile Include="7zMain.c" />
+    <ClCompile Include="7zMainLib.c" />
   </ItemGroup>
 </Project>

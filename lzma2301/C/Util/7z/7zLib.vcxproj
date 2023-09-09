@@ -169,7 +169,7 @@
     <ClCompile Include="..\..\LzmaDec.c" />
     <ClCompile Include="..\..\Ppmd7.c" />
     <ClCompile Include="..\..\Ppmd7Dec.c" />
-    <ClCompile Include="7zMain.c" />
+    <ClCompile Include="7zMainLib.c" />
     <ClCompile Include="Precomp.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>

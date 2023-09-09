@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Alone", "Alone.vcxproj", "{
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AloneLib", "AloneLib.vcxproj", "{9614831F-F2E7-4230-BA18-3D4FADB40F13}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "7zLib", "..\..\..\..\C\Util\7z\7zLib.vcxproj", "{F8767F95-8E3F-4DBD-8956-01B9825CDDEB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -21,6 +23,10 @@ Global
 		{9614831F-F2E7-4230-BA18-3D4FADB40F13}.Debug|x86.Build.0 = Debug|Win32
 		{9614831F-F2E7-4230-BA18-3D4FADB40F13}.Release|x86.ActiveCfg = Release|Win32
 		{9614831F-F2E7-4230-BA18-3D4FADB40F13}.Release|x86.Build.0 = Release|Win32
+		{F8767F95-8E3F-4DBD-8956-01B9825CDDEB}.Debug|x86.ActiveCfg = Debug|Win32
+		{F8767F95-8E3F-4DBD-8956-01B9825CDDEB}.Debug|x86.Build.0 = Debug|Win32
+		{F8767F95-8E3F-4DBD-8956-01B9825CDDEB}.Release|x86.ActiveCfg = Release|Win32
+		{F8767F95-8E3F-4DBD-8956-01B9825CDDEB}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
