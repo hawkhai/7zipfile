@@ -311,13 +311,11 @@ static char* UIntToStr(char* s, unsigned value, int numDigits)
     return s;
 }
 
-/**
-static void UIntToStr_2(char *s, unsigned value)
+static void UIntToStr_2(char* s, unsigned value)
 {
-  s[0] = (char)('0' + (value / 10));
-  s[1] = (char)('0' + (value % 10));
+    s[0] = (char)('0' + (value / 10));
+    s[1] = (char)('0' + (value % 10));
 }
-*/
 
 #define PERIOD_4 (4 * 365 + 1)
 #define PERIOD_100 (PERIOD_4 * 25 - 1)
@@ -430,64 +428,60 @@ static WRes Set_File_FILETIME(const UInt16* name, const FILETIME* mTime)
 
 #endif
 
-/**
-static void NtfsFileTime_to_FILETIME(const CNtfsFileTime *t, FILETIME *ft)
+static void NtfsFileTime_to_FILETIME(const CNtfsFileTime* t, FILETIME* ft)
 {
-  ft->dwLowDateTime = (DWORD)(t->Low);
-  ft->dwHighDateTime = (DWORD)(t->High);
+    ft->dwLowDateTime = (DWORD)(t->Low);
+    ft->dwHighDateTime = (DWORD)(t->High);
 }
-*/
 
-/**
-static void ConvertFileTimeToString(const CNtfsFileTime *nTime, char *s)
+static void ConvertFileTimeToString(const CNtfsFileTime* nTime, char* s)
 {
-  unsigned year, mon, hour, min, sec;
-  Byte ms[] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
-  unsigned t;
-  UInt32 v;
-  // UInt64 v64 = nt->Low | ((UInt64)nt->High << 32);
-  UInt64 v64;
-  {
-    FILETIME fileTime, locTime;
-    NtfsFileTime_to_FILETIME(nTime, &fileTime);
-    if (!FileTimeToLocalFileTime(&fileTime, &locTime))
+    unsigned year, mon, hour, min, sec;
+    Byte ms[] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+    unsigned t;
+    UInt32 v;
+    // UInt64 v64 = nt->Low | ((UInt64)nt->High << 32);
+    UInt64 v64;
     {
-      locTime.dwHighDateTime =
-      locTime.dwLowDateTime = 0;
+        FILETIME fileTime, locTime;
+        NtfsFileTime_to_FILETIME(nTime, &fileTime);
+        if (!FileTimeToLocalFileTime(&fileTime, &locTime))
+        {
+            locTime.dwHighDateTime =
+                locTime.dwLowDateTime = 0;
+        }
+        v64 = locTime.dwLowDateTime | ((UInt64)locTime.dwHighDateTime << 32);
     }
-    v64 = locTime.dwLowDateTime | ((UInt64)locTime.dwHighDateTime << 32);
-  }
-  v64 /= 10000000;
-  sec = (unsigned)(v64 % 60); v64 /= 60;
-  min = (unsigned)(v64 % 60); v64 /= 60;
-  hour = (unsigned)(v64 % 24); v64 /= 24;
+    v64 /= 10000000;
+    sec = (unsigned)(v64 % 60); v64 /= 60;
+    min = (unsigned)(v64 % 60); v64 /= 60;
+    hour = (unsigned)(v64 % 24); v64 /= 24;
 
-  v = (UInt32)v64;
+    v = (UInt32)v64;
 
-  year = (unsigned)(1601 + v / PERIOD_400 * 400);
-  v %= PERIOD_400;
+    year = (unsigned)(1601 + v / PERIOD_400 * 400);
+    v %= PERIOD_400;
 
-  t = v / PERIOD_100; if (t ==  4) t =  3; year += t * 100; v -= t * PERIOD_100;
-  t = v / PERIOD_4;   if (t == 25) t = 24; year += t * 4;   v -= t * PERIOD_4;
-  t = v / 365;        if (t ==  4) t =  3; year += t;       v -= t * 365;
+    t = v / PERIOD_100; if (t == 4) t = 3; year += t * 100; v -= t * PERIOD_100;
+    t = v / PERIOD_4;   if (t == 25) t = 24; year += t * 4;   v -= t * PERIOD_4;
+    t = v / 365;        if (t == 4) t = 3; year += t;       v -= t * 365;
 
-  if (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0))
-    ms[1] = 29;
-  for (mon = 0;; mon++)
-  {
-    const unsigned d = ms[mon];
-    if (v < d)
-      break;
-    v -= d;
-  }
-  s = UIntToStr(s, year, 4); *s++ = '-';
-  UIntToStr_2(s, mon + 1); s[2] = '-'; s += 3;
-  UIntToStr_2(s, (unsigned)v + 1); s[2] = ' '; s += 3;
-  UIntToStr_2(s, hour); s[2] = ':'; s += 3;
-  UIntToStr_2(s, min); s[2] = ':'; s += 3;
-  UIntToStr_2(s, sec); s[2] = 0;
+    if (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0))
+        ms[1] = 29;
+    for (mon = 0;; mon++)
+    {
+        const unsigned d = ms[mon];
+        if (v < d)
+            break;
+        v -= d;
+    }
+    s = UIntToStr(s, year, 4); *s++ = '-';
+    UIntToStr_2(s, mon + 1); s[2] = '-'; s += 3;
+    UIntToStr_2(s, (unsigned)v + 1); s[2] = ' '; s += 3;
+    UIntToStr_2(s, hour); s[2] = ':'; s += 3;
+    UIntToStr_2(s, min); s[2] = ':'; s += 3;
+    UIntToStr_2(s, sec); s[2] = 0;
 }
-*/
 
 static void PrintLF(void)
 {
@@ -538,23 +532,291 @@ static void PrintError_WRes(const char* message, WRes wres)
     PrintLF();
 }
 
-/**
-static void GetAttribString(UInt32 wa, BoolInt isDir, char *s)
+static void GetAttribString(UInt32 wa, BoolInt isDir, char* s)
 {
-  #ifdef USE_WINDOWS_FILE
-  s[0] = (char)(((wa & FILE_ATTRIBUTE_DIRECTORY) != 0 || isDir) ? 'D' : '.');
-  s[1] = (char)(((wa & FILE_ATTRIBUTE_READONLY ) != 0) ? 'R': '.');
-  s[2] = (char)(((wa & FILE_ATTRIBUTE_HIDDEN   ) != 0) ? 'H': '.');
-  s[3] = (char)(((wa & FILE_ATTRIBUTE_SYSTEM   ) != 0) ? 'S': '.');
-  s[4] = (char)(((wa & FILE_ATTRIBUTE_ARCHIVE  ) != 0) ? 'A': '.');
-  s[5] = 0;
-  #else
-  s[0] = (char)(((wa & (1 << 4)) != 0 || isDir) ? 'D' : '.');
-  s[1] = 0;
-  #endif
+#ifdef USE_WINDOWS_FILE
+    s[0] = (char)(((wa & FILE_ATTRIBUTE_DIRECTORY) != 0 || isDir) ? 'D' : '.');
+    s[1] = (char)(((wa & FILE_ATTRIBUTE_READONLY) != 0) ? 'R' : '.');
+    s[2] = (char)(((wa & FILE_ATTRIBUTE_HIDDEN) != 0) ? 'H' : '.');
+    s[3] = (char)(((wa & FILE_ATTRIBUTE_SYSTEM) != 0) ? 'S' : '.');
+    s[4] = (char)(((wa & FILE_ATTRIBUTE_ARCHIVE) != 0) ? 'A' : '.');
+    s[5] = 0;
+#else
+    s[0] = (char)(((wa & (1 << 4)) != 0 || isDir) ? 'D' : '.');
+    s[1] = 0;
+#endif
 }
-*/
 
+/*
+    pSrcFile : .7z文件名(可包含路径)
+    pDstPath : 解压至目标文件夹(必须用绝对路径，目录必须存在，如果为空，直接解压到当前目录)
+*/
+int /*MY_CDECL*/ extract_7z(const wchar_t* pSrcFile, const wchar_t* pDstPath) {
+    int useDestPath = 0;
+    wchar_t szDstPath[MAX_PATH] = { 0 };
+    if (pSrcFile == NULL)
+    {
+        return SZ_ERROR_FAIL;
+    }
+    if (pDstPath)
+    {
+        useDestPath = 1;
+        wcscpy_s(szDstPath, MAX_PATH, pDstPath);
+        pDstPath = szDstPath;
+        PathAddBackslash(szDstPath);
+        MyCreateDir(pDstPath);
+        if (!PathFileExists(pDstPath))
+        {
+            return SZ_ERROR_FAIL;
+        }
+    }
+    CFileInStream archiveStream;
+    CLookToRead2 lookStream;
+    CSzArEx db;
+    SRes res;
+    ISzAlloc allocImp;
+    ISzAlloc allocTempImp;
+    UInt16* temp = NULL;
+    UInt16* destPath = NULL;
+    size_t tempSize = 0;
+    size_t destSize = 0;
+    // UInt32 parents[NUM_PARENTS_MAX];
+
+    printf("\n7z ANSI-C Decoder " MY_VERSION_COPYRIGHT_DATE "\n\n");
+
+#if defined(_WIN32) && !defined(USE_WINDOWS_FILE) && !defined(UNDER_CE)
+    g_FileCodePage = AreFileApisANSI() ? CP_ACP : CP_OEMCP;
+#endif
+
+    allocImp.Alloc = SzAlloc;
+    allocImp.Free = SzFree;
+
+    allocTempImp.Alloc = SzAllocTemp;
+    allocTempImp.Free = SzFreeTemp;
+
+#ifdef UNDER_CE
+    if (InFile_OpenW(&archiveStream.file, L"\test.7z"))
+#else
+    if (InFile_OpenW(&archiveStream.file, pSrcFile))
+#endif
+    {
+        PrintError("can not open input file");
+        return SZ_ERROR_NO_ARCHIVE;
+    }
+
+    FileInStream_CreateVTable(&archiveStream);
+    LookToRead2_CreateVTable(&lookStream, False);
+
+    lookStream.realStream = &archiveStream.vt;
+    LookToRead2_INIT(&lookStream);
+
+    CrcGenerateTable();
+
+    SzArEx_Init(&db);
+
+    res = SzArEx_Open(&db, &lookStream.vt, &allocImp, &allocTempImp);
+
+    if (res == SZ_OK)
+    {
+        int listCommand = 0, testCommand = 0, fullPaths = 1;
+
+        if (res == SZ_OK)
+        {
+            UInt32 i;
+
+            /*
+            if you need cache, use these 3 variables.
+            if you use external function, you can make these variable as static.
+            */
+            UInt32 blockIndex = 0xFFFFFFFF; /* it can have any value before first call (if outBuffer = 0) */
+            Byte* outBuffer = 0; /* it must be 0 before first call for each new archive. */
+            size_t outBufferSize = 0;  /* it can have any value before first call (if outBuffer = 0) */
+
+            for (i = 0; i < db.NumFiles; i++)
+            {
+                size_t offset = 0;
+                size_t outSizeProcessed = 0;
+                // const CSzFileItem *f = db.Files + i;
+                size_t len;
+                unsigned isDir = SzArEx_IsDir(&db, i);
+                if (listCommand == 0 && isDir && !fullPaths)
+                    continue;
+                len = SzArEx_GetFileNameUtf16(&db, i, NULL);
+                // len = SzArEx_GetFullNameLen(&db, i);
+
+                if (len > tempSize)
+                {
+                    SzFree(NULL, temp);
+                    tempSize = len;
+                    temp = (UInt16*)SzAlloc(NULL, tempSize * sizeof(temp[0]));
+                    if (!temp)
+                    {
+                        res = SZ_ERROR_MEM;
+                        break;
+                    }
+                }
+
+                SzArEx_GetFileNameUtf16(&db, i, temp);
+                /*
+                if (SzArEx_GetFullNameUtf16_Back(&db, i, temp + len) != temp)
+                {
+                res = SZ_ERROR_FAIL;
+                break;
+                }
+                */
+
+                if (listCommand)
+                {
+                    char attr[8], s[32], t[32];
+                    UInt64 fileSize;
+
+                    GetAttribString(SzBitWithVals_Check(&db.Attribs, i) ? db.Attribs.Vals[i] : 0, isDir, attr);
+
+                    fileSize = SzArEx_GetFileSize(&db, i);
+                    UInt64ToStr(fileSize, s, 10);
+
+                    if (SzBitWithVals_Check(&db.MTime, i))
+                        ConvertFileTimeToString(&db.MTime.Vals[i], t);
+                    else
+                    {
+                        size_t j;
+                        for (j = 0; j < 19; j++)
+                            t[j] = ' ';
+                        t[j] = '\0';
+                    }
+
+                    printf("%s %s %10s  ", t, attr, s);
+                    res = PrintString(temp);
+                    if (res != SZ_OK)
+                        break;
+                    if (isDir)
+                        printf("/");
+                    printf("\n");
+                    continue;
+                }
+
+                fputs(testCommand ?
+                    "Testing    " :
+                    "Extracting ",
+                    stdout);
+                res = PrintString(temp);
+                if (res != SZ_OK)
+                    break;
+
+                if (isDir)
+                    printf("/");
+                else
+                {
+                    res = SzArEx_Extract(&db, &lookStream.vt, i,
+                        &blockIndex, &outBuffer, &outBufferSize,
+                        &offset, &outSizeProcessed,
+                        &allocImp, &allocTempImp);
+                    if (res != SZ_OK)
+                        break;
+                }
+
+                if (!testCommand)
+                {
+                    CSzFile outFile;
+                    size_t processedSize;
+                    size_t j;
+                    UInt16* name = (UInt16*)temp;
+                    if (useDestPath) {
+                        SzFree(NULL, destPath);
+                        destSize = wcslen(pDstPath);
+                        destSize += tempSize;
+                        destPath = (UInt16*)SzAlloc(NULL, destSize * sizeof(destPath[0]));
+                        if (!destPath)
+                        {
+                            res = SZ_ERROR_MEM;
+                            break;
+                        }
+                        wcscpy_s(destPath, MAX_PATH, pDstPath);
+                        wcscat_s(destPath, MAX_PATH, temp);
+                        name = destPath + wcslen(pDstPath);
+                    }
+                    else
+                        destPath = (UInt16*)name;
+
+
+                    for (j = 0; name[j] != 0; j++)
+                        if (name[j] == '/')
+                        {
+                            if (fullPaths)
+                            {
+                                name[j] = 0;
+                                MyCreateDir(destPath);
+                                name[j] = CHAR_PATH_SEPARATOR;
+                            }
+                            else
+                                destPath = name + j + 1;
+                        }
+
+                    if (isDir)
+                    {
+                        MyCreateDir(destPath);
+                        printf("\n");
+                        continue;
+                    }
+                    else if (OutFile_OpenUtf16(&outFile, destPath))
+                    {
+                        PrintError("can not open output file");
+                        res = SZ_ERROR_FAIL;
+                        break;
+                    }
+
+                    processedSize = outSizeProcessed;
+
+                    if (File_Write(&outFile, outBuffer + offset, &processedSize) != 0 || processedSize != outSizeProcessed)
+                    {
+                        PrintError("can not write output file");
+                        res = SZ_ERROR_FAIL;
+                        break;
+                    }
+
+                    if (File_Close(&outFile))
+                    {
+                        PrintError("can not close output file");
+                        res = SZ_ERROR_FAIL;
+                        break;
+                    }
+
+#ifdef USE_WINDOWS_FILE
+                    if (SzBitWithVals_Check(&db.Attribs, i))
+                        SetFileAttributesW(destPath, db.Attribs.Vals[i]);
+#endif              
+                }
+                printf("\n");
+            }
+            IAlloc_Free(&allocImp, outBuffer);
+        }
+    }
+
+    SzArEx_Free(&db, &allocImp);
+    SzFree(NULL, temp);
+    if (useDestPath) {
+        SzFree(NULL, destPath);
+    }
+
+    File_Close(&archiveStream.file);
+
+    if (res == SZ_OK)
+    {
+        printf("\nEverything is Ok\n");
+        return res;
+    }
+
+    if (res == SZ_ERROR_UNSUPPORTED)
+        PrintError("decoder doesn't support this archive");
+    else if (res == SZ_ERROR_MEM)
+        PrintError("can not allocate memory");
+    else if (res == SZ_ERROR_CRC)
+        PrintError("CRC error");
+    else
+        printf("\nERROR #%d\n", res);
+
+    return res;
+}
 
 // #define NUM_PARENTS_MAX 128
 
@@ -563,8 +825,12 @@ static void GetAttribString(UInt32 wa, BoolInt isDir, char *s)
         pSrcFile : .7z文件名（可包含路径）
         pDstPath : 解压至目标文件夹（必须用绝对路径，目录必须存在，如果为空，直接解压到当前目录）
     */
-int Z7DLLEXPORT Extract7z(wchar_t* pSrcFile, wchar_t* pDstPath)
+int Z7DLLEXPORT Extract7z(const wchar_t* pSrcFile, const wchar_t* pDstPath)
 {
+    if (pSrcFile) {
+        return extract_7z(pSrcFile, pDstPath);
+    }
+
     int useDestPath = 0;
     wchar_t szDstPath[MAX_PATH] = { 0 };
 
@@ -592,7 +858,8 @@ int Z7DLLEXPORT Extract7z(wchar_t* pSrcFile, wchar_t* pDstPath)
     CSzArEx db;
     SRes res;
     UInt16* temp = NULL;
-    UInt16* destPath = NULL;
+    UInt16* destPathSrc = NULL;
+    UInt16* destPathPtr = NULL;
     size_t tempSize = 0;
     size_t destSize = 0;
     // UInt32 parents[NUM_PARENTS_MAX];
@@ -726,23 +993,24 @@ int Z7DLLEXPORT Extract7z(wchar_t* pSrcFile, wchar_t* pDstPath)
                     //const UInt16 *destPath = (const UInt16 *)name;
 
                     if (useDestPath) {
-                        if (destPath) {
-                            SzFree(NULL, destPath);
+                        if (destPathSrc) {
+                            SzFree(NULL, destPathSrc);
                         }
                         destSize = wcslen(pDstPath);
                         destSize += tempSize;
-                        destPath = (UInt16*)SzAlloc(NULL, destSize * sizeof(destPath[0]));
-                        if (!destPath)
+                        destPathSrc = (UInt16*)SzAlloc(NULL, destSize * sizeof(destPathSrc[0]));
+                        if (!destPathSrc)
                         {
                             res = SZ_ERROR_MEM;
                             break;
                         }
-                        wcscpy_s(destPath, MAX_PATH, pDstPath);
-                        wcscat_s(destPath, MAX_PATH, temp);
-                        name = destPath + wcslen(pDstPath);
+                        wcscpy_s(destPathSrc, MAX_PATH, pDstPath);
+                        wcscat_s(destPathSrc, MAX_PATH, temp);
+                        name = destPathSrc + wcslen(pDstPath);
+                        destPathPtr = name;
                     }
                     else {
-                        destPath = (UInt16*)name;
+                        destPathPtr = (UInt16*)name;
                     }
 
                     for (j = 0; name[j] != 0; j++)
@@ -755,18 +1023,18 @@ int Z7DLLEXPORT Extract7z(wchar_t* pSrcFile, wchar_t* pDstPath)
                                 name[j] = CHAR_PATH_SEPARATOR;
                             }
                             else
-                                destPath = name + j + 1;
+                                destPathPtr = name + j + 1;
                         }
 
                     if (isDir)
                     {
-                        MyCreateDir(destPath);
+                        MyCreateDir(destPathPtr);
                         PrintLF();
                         continue;
                     }
                     else
                     {
-                        const WRes wres = OutFile_OpenUtf16(&outFile, destPath);
+                        const WRes wres = OutFile_OpenUtf16(&outFile, destPathPtr);
                         if (wres != 0)
                         {
                             PrintError_WRes("cannot open output file", wres);
@@ -845,7 +1113,7 @@ int Z7DLLEXPORT Extract7z(wchar_t* pSrcFile, wchar_t* pDstPath)
                            We remove posix bits, if we detect posix mode field */
                         if ((attrib & 0xF0000000) != 0)
                             attrib &= 0x7FFF;
-                        SetFileAttributesW((LPCWSTR)destPath, attrib);
+                        SetFileAttributesW((LPCWSTR)destPathPtr, attrib);
                     }
 #endif
                 }
@@ -859,8 +1127,8 @@ int Z7DLLEXPORT Extract7z(wchar_t* pSrcFile, wchar_t* pDstPath)
     SzArEx_Free(&db, &allocImp);
     ISzAlloc_Free(&allocImp, lookStream.buf);
 
-    if (useDestPath && destPath) {
-        SzFree(NULL, destPath);
+    if (useDestPath && destPathSrc) {
+        SzFree(NULL, destPathSrc);
     }
     File_Close(&archiveStream.file);
 

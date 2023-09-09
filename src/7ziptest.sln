@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.31911.196
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "7ziptest", "7ziptest\7ziptest.vcxproj", "{6B7E65C1-9AB4-4D04-8761-EA15C959AC5C}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "7zLib", "..\lzma2301\C\Util\7z\7zLib.vcxproj", "{F8767F95-8E3F-4DBD-8956-01B9825CDDEB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +23,12 @@ Global
 		{6B7E65C1-9AB4-4D04-8761-EA15C959AC5C}.Release|x64.Build.0 = Release|x64
 		{6B7E65C1-9AB4-4D04-8761-EA15C959AC5C}.Release|x86.ActiveCfg = Release|Win32
 		{6B7E65C1-9AB4-4D04-8761-EA15C959AC5C}.Release|x86.Build.0 = Release|Win32
+		{F8767F95-8E3F-4DBD-8956-01B9825CDDEB}.Debug|x64.ActiveCfg = Debug|Win32
+		{F8767F95-8E3F-4DBD-8956-01B9825CDDEB}.Debug|x86.ActiveCfg = Debug|Win32
+		{F8767F95-8E3F-4DBD-8956-01B9825CDDEB}.Debug|x86.Build.0 = Debug|Win32
+		{F8767F95-8E3F-4DBD-8956-01B9825CDDEB}.Release|x64.ActiveCfg = Release|Win32
+		{F8767F95-8E3F-4DBD-8956-01B9825CDDEB}.Release|x86.ActiveCfg = Release|Win32
+		{F8767F95-8E3F-4DBD-8956-01B9825CDDEB}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

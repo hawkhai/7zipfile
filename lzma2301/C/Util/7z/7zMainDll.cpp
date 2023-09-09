@@ -10,7 +10,7 @@ public:
         delete this;
         return 0;
     }
-    virtual int Extract7z(wchar_t* pSrcFile, wchar_t* pDstPath) {
+    virtual int Extract7z(const wchar_t* pSrcFile, const wchar_t* pDstPath) {
         return ::Extract7z(pSrcFile, pDstPath);
     }
     virtual int SetLogPrint(BOOL value) {

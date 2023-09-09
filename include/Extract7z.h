@@ -36,11 +36,11 @@
 __interface IZ7DllInterface {
     virtual int Version() = 0;
     virtual int Release() = 0;
-    virtual int Extract7z(wchar_t* pSrcFile, wchar_t* pDstPath) = 0;
+    virtual int Extract7z(const wchar_t* pSrcFile, const wchar_t* pDstPath) = 0;
     virtual int SetLogPrint(BOOL value) = 0;
 };
 
-Z7DLLEXPORT IZ7DllInterface* CreateEntry();
+extern "C" Z7DLLEXPORT IZ7DllInterface* CreateEntry();
 
 class KZ7DllWrap : public IZ7DllInterface {
 
@@ -98,7 +98,7 @@ public:
         return retv;
     }
 
-    virtual int Extract7z(wchar_t* pSrcFile, wchar_t* pDstPath) override {
+    virtual int Extract7z(const wchar_t* pSrcFile, const wchar_t* pDstPath) override {
         if (!m_interface) {
             return SZ_ERROR_FAIL;
         }
@@ -174,7 +174,7 @@ extern "C" {
         pSrcFile : .7z文件名（可包含路径）
         pDstPath : 解压至目标文件夹（必须用绝对路径，目录必须存在，如果为空，直接解压到当前目录）
     */
-    int Z7DLLEXPORT Extract7z(wchar_t* pSrcFile, wchar_t* pDstPath);
+    int Z7DLLEXPORT Extract7z(const wchar_t* pSrcFile, const wchar_t* pDstPath);
 
     int Z7DLLEXPORT SetLogPrint(BOOL value);
 
