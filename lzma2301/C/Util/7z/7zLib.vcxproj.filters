@@ -120,5 +120,6 @@
       <Filter>Spec</Filter>
     </ClCompile>
     <ClCompile Include="7zMainLib.c" />
+    <ClCompile Include="7zMainDll.cpp" />
   </ItemGroup>
 </Project>
