@@ -1,5 +1,8 @@
 /.vs
 /Debug
+/DebugU
+/Release
+/ReleaseU
 /Backup
 *.user
 *.ncb
