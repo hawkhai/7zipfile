@@ -92,8 +92,8 @@
       <OutputFile>.\Release/7z.bsc</OutputFile>
     </Bscmake>
     <PostBuildEvent>
-      <Command>copy "$(TargetDir)$(TargetName).dll" "$(TargetDir)..\..\..\..\..\bin\win32-mt\" /y
-copy "$(TargetDir)$(TargetName).pdb" "$(TargetDir)..\..\..\..\..\bin\win32-mt\" /y
+      <Command>copy "$(TargetDir)$(TargetName).dll" "$(TargetDir)..\..\..\..\..\bin\win32-dll\" /y
+copy "$(TargetDir)$(TargetName).pdb" "$(TargetDir)..\..\..\..\..\bin\win32-dll\" /y
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -134,8 +134,8 @@ copy "$(TargetDir)$(TargetName).pdb" "$(TargetDir)..\..\..\..\..\bin\win32-mt\" 
       <OutputFile>.\Debug/7z.bsc</OutputFile>
     </Bscmake>
     <PostBuildEvent>
-      <Command>copy "$(TargetDir)$(TargetName).dll" "$(TargetDir)..\..\..\..\..\bin\win32-mt\" /y
-copy "$(TargetDir)$(TargetName).pdb" "$(TargetDir)..\..\..\..\..\bin\win32-mt\" /y
+      <Command>copy "$(TargetDir)$(TargetName).dll" "$(TargetDir)..\..\..\..\..\bin\win32-dll\" /y
+copy "$(TargetDir)$(TargetName).pdb" "$(TargetDir)..\..\..\..\..\bin\win32-dll\" /y
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
