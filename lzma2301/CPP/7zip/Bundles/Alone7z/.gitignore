@@ -1,0 +1,6 @@
+/.vs
+/Debug
+/Backup
+*.user
+*.ncb
+*.suo
