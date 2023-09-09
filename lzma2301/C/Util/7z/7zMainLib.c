@@ -576,8 +576,8 @@ int /*MY_CDECL*/ extract_7z(const wchar_t* pSrcFile, const wchar_t* pDstPath) {
     SRes res;
     ISzAlloc allocImp;
     ISzAlloc allocTempImp;
-    UInt16* temp = NULL;
-    UInt16* destPath = NULL;
+    wchar_t* temp = NULL;
+    wchar_t* destPath = NULL;
     size_t tempSize = 0;
     size_t destSize = 0;
     // UInt32 parents[NUM_PARENTS_MAX];
@@ -648,7 +648,7 @@ int /*MY_CDECL*/ extract_7z(const wchar_t* pSrcFile, const wchar_t* pDstPath) {
                 {
                     SzFree(NULL, temp);
                     tempSize = len;
-                    temp = (UInt16*)SzAlloc(NULL, tempSize * sizeof(temp[0]));
+                    temp = (wchar_t*)SzAlloc(NULL, tempSize * sizeof(temp[0]));
                     if (!temp)
                     {
                         res = SZ_ERROR_MEM;
@@ -720,12 +720,12 @@ int /*MY_CDECL*/ extract_7z(const wchar_t* pSrcFile, const wchar_t* pDstPath) {
                     CSzFile outFile;
                     size_t processedSize;
                     size_t j;
-                    UInt16* name = (UInt16*)temp;
+                    wchar_t* name = (wchar_t*)temp;
                     if (useDestPath) {
                         SzFree(NULL, destPath);
                         destSize = wcslen(pDstPath);
                         destSize += tempSize;
-                        destPath = (UInt16*)SzAlloc(NULL, destSize * sizeof(destPath[0]));
+                        destPath = (wchar_t*)SzAlloc(NULL, destSize * sizeof(destPath[0]));
                         if (!destPath)
                         {
                             res = SZ_ERROR_MEM;
@@ -736,7 +736,7 @@ int /*MY_CDECL*/ extract_7z(const wchar_t* pSrcFile, const wchar_t* pDstPath) {
                         name = destPath + wcslen(pDstPath);
                     }
                     else
-                        destPath = (UInt16*)name;
+                        destPath = (wchar_t*)name;
 
 
                     for (j = 0; name[j] != 0; j++)
@@ -857,9 +857,9 @@ int Z7DLLEXPORT Extract7z(const wchar_t* pSrcFile, const wchar_t* pDstPath)
     CLookToRead2 lookStream;
     CSzArEx db;
     SRes res;
-    UInt16* temp = NULL;
-    UInt16* destPathSrc = NULL;
-    UInt16* destPathPtr = NULL;
+    wchar_t* temp = NULL;
+    wchar_t* destPathSrc = NULL;
+    wchar_t* destPathPtr = NULL;
     size_t tempSize = 0;
     size_t destSize = 0;
     // UInt32 parents[NUM_PARENTS_MAX];
@@ -946,7 +946,7 @@ int Z7DLLEXPORT Extract7z(const wchar_t* pSrcFile, const wchar_t* pDstPath)
             {
                 SzFree(NULL, temp);
                 tempSize = len;
-                temp = (UInt16*)SzAlloc(NULL, tempSize * sizeof(temp[0]));
+                temp = (wchar_t*)SzAlloc(NULL, tempSize * sizeof(temp[0]));
                 if (!temp)
                 {
                     res = SZ_ERROR_MEM;
@@ -987,8 +987,8 @@ int Z7DLLEXPORT Extract7z(const wchar_t* pSrcFile, const wchar_t* pDstPath)
                 CSzFile outFile;
                 size_t processedSize;
                 size_t j;
-                UInt16* name = (UInt16*)temp;
-                //const UInt16 *destPath = (const UInt16 *)name;
+                wchar_t* name = (wchar_t*)temp;
+                //const wchar_t *destPath = (const wchar_t *)name;
 
                 if (useDestPath) {
                     if (destPathSrc) {
@@ -996,7 +996,7 @@ int Z7DLLEXPORT Extract7z(const wchar_t* pSrcFile, const wchar_t* pDstPath)
                     }
                     destSize = wcslen(pDstPath);
                     destSize += tempSize;
-                    destPathSrc = (UInt16*)SzAlloc(NULL, destSize * sizeof(destPathSrc[0]));
+                    destPathSrc = (wchar_t*)SzAlloc(NULL, (destSize + 10) * sizeof(destPathSrc[0]));
                     if (!destPathSrc)
                     {
                         res = SZ_ERROR_MEM;
@@ -1005,13 +1005,13 @@ int Z7DLLEXPORT Extract7z(const wchar_t* pSrcFile, const wchar_t* pDstPath)
                     wcscpy_s(destPathSrc, MAX_PATH, pDstPath);
                     wcscat_s(destPathSrc, MAX_PATH, temp);
                     name = destPathSrc + wcslen(pDstPath);
-                    destPathPtr = name;
+                    destPathPtr = destPathSrc;
                 }
                 else {
-                    destPathPtr = (UInt16*)name;
+                    destPathPtr = (wchar_t*)name;
                 }
 
-                for (j = 0; name[j] != 0; j++)
+                for (j = 0; name[j] != 0; j++) {
                     if (name[j] == '/')
                     {
                         if (fullPaths)
@@ -1023,6 +1023,7 @@ int Z7DLLEXPORT Extract7z(const wchar_t* pSrcFile, const wchar_t* pDstPath)
                         else
                             destPathPtr = name + j + 1;
                     }
+                }
 
                 if (isDir)
                 {
