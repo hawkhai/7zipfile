@@ -41,11 +41,17 @@
 
 static const ISzAlloc g_Alloc = { SzAlloc, SzFree };
 // static const ISzAlloc g_Alloc_temp = { SzAllocTemp, SzFreeTemp };
-
+static BOOL g_bPrint = 0;
+int Z7DLLEXPORT SetLogPrint(BOOL value) {
+    g_bPrint = value;
+    return SZ_OK;
+}
 
 static void Print(const char* s)
 {
-    fputs(s, stdout);
+    if (g_bPrint) {
+        fputs(s, stdout);
+    }
 }
 
 
@@ -563,7 +569,7 @@ int Z7DLLEXPORT Extract7z(wchar_t* pSrcFile, wchar_t* pDstPath)
     wchar_t szDstPath[MAX_PATH] = { 0 };
 
     if (pSrcFile == NULL) {
-        return -1;
+        return SZ_ERROR_FAIL;
     }
     if (pDstPath) {
         useDestPath = 1;
@@ -574,7 +580,7 @@ int Z7DLLEXPORT Extract7z(wchar_t* pSrcFile, wchar_t* pDstPath)
         MyCreateDir(pDstPath);
         if (!PathFileExists(pDstPath))
         {
-            return -1;
+            return SZ_ERROR_FAIL;
         }
     }
 
@@ -610,7 +616,7 @@ int Z7DLLEXPORT Extract7z(wchar_t* pSrcFile, wchar_t* pDstPath)
         if (wres != 0)
         {
             PrintError_WRes("cannot open input file", wres);
-            return 1;
+            return SZ_ERROR_NO_ARCHIVE;
         }
     }
 
@@ -861,7 +867,7 @@ int Z7DLLEXPORT Extract7z(wchar_t* pSrcFile, wchar_t* pDstPath)
     if (res == SZ_OK)
     {
         Print("\nEverything is Ok\n");
-        return 0;
+        return SZ_OK;
     }
 
     if (res == SZ_ERROR_UNSUPPORTED)
@@ -879,5 +885,5 @@ int Z7DLLEXPORT Extract7z(wchar_t* pSrcFile, wchar_t* pDstPath)
         PrintError(s);
     }
 
-    return 1;
+    return res;
 }
