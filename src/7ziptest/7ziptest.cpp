@@ -1,5 +1,5 @@
 ﻿#include <iostream>
-#include "../include/vld.h"
+#include "../../3rdsdk/vld/include/vld.h"
 #include "../../include/Extract7z.h"
 
 int main()
