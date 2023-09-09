@@ -548,8 +548,8 @@ static void GetAttribString(UInt32 wa, BoolInt isDir, char* s)
 }
 
 /*
-    pSrcFile : .7z文件名(可包含路径)
-    pDstPath : 解压至目标文件夹(必须用绝对路径，目录必须存在，如果为空，直接解压到当前目录)
+    pSrcFile : .7z文件名（可包含路径）
+    pDstPath : 解压至目标文件夹（必须用绝对路径，目录必须存在，如果为空，直接解压到当前目录）
 */
 int /*MY_CDECL*/ extract_7z(const wchar_t* pSrcFile, const wchar_t* pDstPath) {
     int useDestPath = 0;
@@ -827,9 +827,9 @@ int /*MY_CDECL*/ extract_7z(const wchar_t* pSrcFile, const wchar_t* pDstPath) {
     */
 int Z7DLLEXPORT Extract7z(const wchar_t* pSrcFile, const wchar_t* pDstPath)
 {
-    if (pSrcFile) {
-        return extract_7z(pSrcFile, pDstPath);
-    }
+    //if (pSrcFile) {
+    //    return extract_7z(pSrcFile, pDstPath);
+    //}
 
     int useDestPath = 0;
     wchar_t szDstPath[MAX_PATH] = { 0 };
@@ -920,207 +920,204 @@ int Z7DLLEXPORT Extract7z(const wchar_t* pSrcFile, const wchar_t* pDstPath)
         int listCommand = 0, testCommand = 0, fullPaths = 1;
 
 
-        if (res == SZ_OK)
+        UInt32 i;
+
+        /*
+        if you need cache, use these 3 variables.
+        if you use external function, you can make these variable as static.
+        */
+        UInt32 blockIndex = 0xFFFFFFFF; /* it can have any value before first call (if outBuffer = 0) */
+        Byte* outBuffer = 0; /* it must be 0 before first call for each new archive. */
+        size_t outBufferSize = 0;  /* it can have any value before first call (if outBuffer = 0) */
+
+        for (i = 0; i < db.NumFiles; i++)
         {
-            UInt32 i;
+            size_t offset = 0;
+            size_t outSizeProcessed = 0;
+            // const CSzFileItem *f = db.Files + i;
+            size_t len;
+            const BoolInt isDir = SzArEx_IsDir(&db, i);
+            if (listCommand == 0 && isDir && !fullPaths)
+                continue;
+            len = SzArEx_GetFileNameUtf16(&db, i, NULL);
+            // len = SzArEx_GetFullNameLen(&db, i);
 
-            /*
-            if you need cache, use these 3 variables.
-            if you use external function, you can make these variable as static.
-            */
-            UInt32 blockIndex = 0xFFFFFFFF; /* it can have any value before first call (if outBuffer = 0) */
-            Byte* outBuffer = 0; /* it must be 0 before first call for each new archive. */
-            size_t outBufferSize = 0;  /* it can have any value before first call (if outBuffer = 0) */
-
-            for (i = 0; i < db.NumFiles; i++)
+            if (len > tempSize)
             {
-                size_t offset = 0;
-                size_t outSizeProcessed = 0;
-                // const CSzFileItem *f = db.Files + i;
-                size_t len;
-                const BoolInt isDir = SzArEx_IsDir(&db, i);
-                if (listCommand == 0 && isDir && !fullPaths)
-                    continue;
-                len = SzArEx_GetFileNameUtf16(&db, i, NULL);
-                // len = SzArEx_GetFullNameLen(&db, i);
-
-                if (len > tempSize)
+                SzFree(NULL, temp);
+                tempSize = len;
+                temp = (UInt16*)SzAlloc(NULL, tempSize * sizeof(temp[0]));
+                if (!temp)
                 {
-                    SzFree(NULL, temp);
-                    tempSize = len;
-                    temp = (UInt16*)SzAlloc(NULL, tempSize * sizeof(temp[0]));
-                    if (!temp)
+                    res = SZ_ERROR_MEM;
+                    break;
+                }
+            }
+
+            SzArEx_GetFileNameUtf16(&db, i, temp);
+            /*
+            if (SzArEx_GetFullNameUtf16_Back(&db, i, temp + len) != temp)
+            {
+              res = SZ_ERROR_FAIL;
+              break;
+            }
+            */
+
+            Print(testCommand ?
+                "T " :
+                "- ");
+            res = PrintString(temp);
+            if (res != SZ_OK)
+                break;
+
+            if (isDir)
+                Print("/");
+            else
+            {
+                res = SzArEx_Extract(&db, &lookStream.vt, i,
+                    &blockIndex, &outBuffer, &outBufferSize,
+                    &offset, &outSizeProcessed,
+                    &allocImp, &allocTempImp);
+                if (res != SZ_OK)
+                    break;
+            }
+
+            if (!testCommand)
+            {
+                CSzFile outFile;
+                size_t processedSize;
+                size_t j;
+                UInt16* name = (UInt16*)temp;
+                //const UInt16 *destPath = (const UInt16 *)name;
+
+                if (useDestPath) {
+                    if (destPathSrc) {
+                        SzFree(NULL, destPathSrc);
+                    }
+                    destSize = wcslen(pDstPath);
+                    destSize += tempSize;
+                    destPathSrc = (UInt16*)SzAlloc(NULL, destSize * sizeof(destPathSrc[0]));
+                    if (!destPathSrc)
                     {
                         res = SZ_ERROR_MEM;
                         break;
                     }
+                    wcscpy_s(destPathSrc, MAX_PATH, pDstPath);
+                    wcscat_s(destPathSrc, MAX_PATH, temp);
+                    name = destPathSrc + wcslen(pDstPath);
+                    destPathPtr = name;
+                }
+                else {
+                    destPathPtr = (UInt16*)name;
                 }
 
-                SzArEx_GetFileNameUtf16(&db, i, temp);
-                /*
-                if (SzArEx_GetFullNameUtf16_Back(&db, i, temp + len) != temp)
-                {
-                  res = SZ_ERROR_FAIL;
-                  break;
-                }
-                */
-
-                Print(testCommand ?
-                    "T " :
-                    "- ");
-                res = PrintString(temp);
-                if (res != SZ_OK)
-                    break;
+                for (j = 0; name[j] != 0; j++)
+                    if (name[j] == '/')
+                    {
+                        if (fullPaths)
+                        {
+                            name[j] = 0;
+                            MyCreateDir(name);
+                            name[j] = CHAR_PATH_SEPARATOR;
+                        }
+                        else
+                            destPathPtr = name + j + 1;
+                    }
 
                 if (isDir)
-                    Print("/");
+                {
+                    MyCreateDir(destPathPtr);
+                    PrintLF();
+                    continue;
+                }
                 else
                 {
-                    res = SzArEx_Extract(&db, &lookStream.vt, i,
-                        &blockIndex, &outBuffer, &outBufferSize,
-                        &offset, &outSizeProcessed,
-                        &allocImp, &allocTempImp);
-                    if (res != SZ_OK)
+                    const WRes wres = OutFile_OpenUtf16(&outFile, destPathPtr);
+                    if (wres != 0)
+                    {
+                        PrintError_WRes("cannot open output file", wres);
+                        res = SZ_ERROR_FAIL;
                         break;
+                    }
                 }
 
-                if (!testCommand)
+                processedSize = outSizeProcessed;
+
                 {
-                    CSzFile outFile;
-                    size_t processedSize;
-                    size_t j;
-                    UInt16* name = (UInt16*)temp;
-                    //const UInt16 *destPath = (const UInt16 *)name;
-
-                    if (useDestPath) {
-                        if (destPathSrc) {
-                            SzFree(NULL, destPathSrc);
-                        }
-                        destSize = wcslen(pDstPath);
-                        destSize += tempSize;
-                        destPathSrc = (UInt16*)SzAlloc(NULL, destSize * sizeof(destPathSrc[0]));
-                        if (!destPathSrc)
-                        {
-                            res = SZ_ERROR_MEM;
-                            break;
-                        }
-                        wcscpy_s(destPathSrc, MAX_PATH, pDstPath);
-                        wcscat_s(destPathSrc, MAX_PATH, temp);
-                        name = destPathSrc + wcslen(pDstPath);
-                        destPathPtr = name;
-                    }
-                    else {
-                        destPathPtr = (UInt16*)name;
-                    }
-
-                    for (j = 0; name[j] != 0; j++)
-                        if (name[j] == '/')
-                        {
-                            if (fullPaths)
-                            {
-                                name[j] = 0;
-                                MyCreateDir(name);
-                                name[j] = CHAR_PATH_SEPARATOR;
-                            }
-                            else
-                                destPathPtr = name + j + 1;
-                        }
-
-                    if (isDir)
+                    const WRes wres = File_Write(&outFile, outBuffer + offset, &processedSize);
+                    if (wres != 0 || processedSize != outSizeProcessed)
                     {
-                        MyCreateDir(destPathPtr);
-                        PrintLF();
-                        continue;
+                        PrintError_WRes("cannot write output file", wres);
+                        res = SZ_ERROR_FAIL;
+                        break;
                     }
-                    else
+                }
+
+                {
+                    FILETIME mtime;
+                    FILETIME* mtimePtr = NULL;
+
+#ifdef USE_WINDOWS_FILE
+                    FILETIME ctime;
+                    FILETIME* ctimePtr = NULL;
+#endif
+
+                    if (SzBitWithVals_Check(&db.MTime, i))
                     {
-                        const WRes wres = OutFile_OpenUtf16(&outFile, destPathPtr);
+                        const CNtfsFileTime* t = &db.MTime.Vals[i];
+                        mtime.dwLowDateTime = (DWORD)(t->Low);
+                        mtime.dwHighDateTime = (DWORD)(t->High);
+                        mtimePtr = &mtime;
+                    }
+
+#ifdef USE_WINDOWS_FILE
+                    if (SzBitWithVals_Check(&db.CTime, i))
+                    {
+                        const CNtfsFileTime* t = &db.CTime.Vals[i];
+                        ctime.dwLowDateTime = (DWORD)(t->Low);
+                        ctime.dwHighDateTime = (DWORD)(t->High);
+                        ctimePtr = &ctime;
+                    }
+
+                    if (mtimePtr || ctimePtr)
+                        SetFileTime(outFile.handle, ctimePtr, NULL, mtimePtr);
+#endif
+
+                    {
+                        const WRes wres = File_Close(&outFile);
                         if (wres != 0)
                         {
-                            PrintError_WRes("cannot open output file", wres);
+                            PrintError_WRes("cannot close output file", wres);
                             res = SZ_ERROR_FAIL;
                             break;
                         }
                     }
-
-                    processedSize = outSizeProcessed;
-
-                    {
-                        const WRes wres = File_Write(&outFile, outBuffer + offset, &processedSize);
-                        if (wres != 0 || processedSize != outSizeProcessed)
-                        {
-                            PrintError_WRes("cannot write output file", wres);
-                            res = SZ_ERROR_FAIL;
-                            break;
-                        }
-                    }
-
-                    {
-                        FILETIME mtime;
-                        FILETIME* mtimePtr = NULL;
-
-#ifdef USE_WINDOWS_FILE
-                        FILETIME ctime;
-                        FILETIME* ctimePtr = NULL;
-#endif
-
-                        if (SzBitWithVals_Check(&db.MTime, i))
-                        {
-                            const CNtfsFileTime* t = &db.MTime.Vals[i];
-                            mtime.dwLowDateTime = (DWORD)(t->Low);
-                            mtime.dwHighDateTime = (DWORD)(t->High);
-                            mtimePtr = &mtime;
-                        }
-
-#ifdef USE_WINDOWS_FILE
-                        if (SzBitWithVals_Check(&db.CTime, i))
-                        {
-                            const CNtfsFileTime* t = &db.CTime.Vals[i];
-                            ctime.dwLowDateTime = (DWORD)(t->Low);
-                            ctime.dwHighDateTime = (DWORD)(t->High);
-                            ctimePtr = &ctime;
-                        }
-
-                        if (mtimePtr || ctimePtr)
-                            SetFileTime(outFile.handle, ctimePtr, NULL, mtimePtr);
-#endif
-
-                        {
-                            const WRes wres = File_Close(&outFile);
-                            if (wres != 0)
-                            {
-                                PrintError_WRes("cannot close output file", wres);
-                                res = SZ_ERROR_FAIL;
-                                break;
-                            }
-                        }
 
 #ifndef USE_WINDOWS_FILE
 #ifdef _WIN32
-                        mtimePtr = mtimePtr;
+                    mtimePtr = mtimePtr;
 #else
-                        if (mtimePtr)
-                            Set_File_FILETIME(destPath, mtimePtr);
+                    if (mtimePtr)
+                        Set_File_FILETIME(destPath, mtimePtr);
 #endif
-#endif
-                    }
-
-#ifdef USE_WINDOWS_FILE
-                    if (SzBitWithVals_Check(&db.Attribs, i))
-                    {
-                        UInt32 attrib = db.Attribs.Vals[i];
-                        /* p7zip stores posix attributes in high 16 bits and adds 0x8000 as marker.
-                           We remove posix bits, if we detect posix mode field */
-                        if ((attrib & 0xF0000000) != 0)
-                            attrib &= 0x7FFF;
-                        SetFileAttributesW((LPCWSTR)destPathPtr, attrib);
-                    }
 #endif
                 }
-                PrintLF();
+
+#ifdef USE_WINDOWS_FILE
+                if (SzBitWithVals_Check(&db.Attribs, i))
+                {
+                    UInt32 attrib = db.Attribs.Vals[i];
+                    /* p7zip stores posix attributes in high 16 bits and adds 0x8000 as marker.
+                       We remove posix bits, if we detect posix mode field */
+                    if ((attrib & 0xF0000000) != 0)
+                        attrib &= 0x7FFF;
+                    SetFileAttributesW((LPCWSTR)destPathPtr, attrib);
+                }
+#endif
+                }
+            PrintLF();
             }
-            ISzAlloc_Free(&allocImp, outBuffer);
-        }
+        ISzAlloc_Free(&allocImp, outBuffer);
     }
 
     SzFree(NULL, temp);
