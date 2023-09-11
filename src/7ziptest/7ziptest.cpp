@@ -1,5 +1,6 @@
 ﻿#include <iostream>
 #include "../../3rdsdk/vld/include/vld.h"
+//#define Z7STATIC_IMPORT
 #include "../../include/Extract7z.h"
 
 int main()
