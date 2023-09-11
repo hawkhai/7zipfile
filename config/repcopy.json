@@ -50,6 +50,14 @@
         {
             "source": "AloneLib.vcxproj",
             "target": "AloneLib_md.vcxproj"
+        },
+        {
+            "source": "7z64mt",
+            "target": "7z64md"
+        },
+        {
+            "source": "7zmt",
+            "target": "7zmd"
         }
     ]
 }
