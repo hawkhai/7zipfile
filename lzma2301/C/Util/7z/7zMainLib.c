@@ -42,7 +42,7 @@
 static const ISzAlloc g_Alloc = { SzAlloc, SzFree };
 // static const ISzAlloc g_Alloc_temp = { SzAllocTemp, SzFreeTemp };
 static BOOL g_bPrint = 0;
-int Z7DLLEXPORT SetLogPrint(BOOL value) {
+int SetLogPrint(BOOL value) {
     g_bPrint = value;
     return SZ_OK;
 }
@@ -555,7 +555,7 @@ static void GetAttribString(UInt32 wa, BoolInt isDir, char* s)
         pSrcFile : .7z文件名（可包含路径）
         pDstPath : 解压至目标文件夹（必须用绝对路径，目录必须存在，如果为空，直接解压到当前目录）
     */
-int Z7DLLEXPORT Extract7z(const wchar_t* pSrcFile, const wchar_t* pDstPath)
+int Extract7z(const wchar_t* pSrcFile, const wchar_t* pDstPath)
 {
     int useDestPath = 0;
     wchar_t szDstPath[MAX_PATH] = { 0 };

@@ -5,7 +5,11 @@
 #ifdef Z7_DLL_EXPOTS
 #define Z7DLLEXPORT __declspec(dllexport)
 #else
+#if defined Z7STATIC_IMPORT || defined Z7_LIB_EXPOTS
+#define Z7DLLEXPORT //__declspec(dllimport)
+#else
 #define Z7DLLEXPORT __declspec(dllimport)
+#endif
 #endif
 
 #define Z7DLL_VERSION 1
