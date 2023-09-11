@@ -39,19 +39,36 @@
 #define intx int
 #endif
 
+// https://learn.microsoft.com/zh-cn/cpp/preprocessor/predefined-macros?view=msvc-170
 #ifdef Z7STATIC_IMPORT
-#if defined __amd64__ || defined __x86_64__ || defined _WIN64 || defined _M_X64
-#ifdef _DEBUG
-#pragma comment(lib, "7z64mtd.lib")
+#ifdef _DLL
+    #if defined __amd64__ || defined __x86_64__ || defined _WIN64 || defined _M_X64
+        #ifdef _DEBUG
+            #pragma comment(lib, "7z64mdd.lib")
+        #else
+            #pragma comment(lib, "7z64md.lib")
+        #endif
+    #else
+        #ifdef _DEBUG
+            #pragma comment(lib, "7zmdd.lib")
+        #else
+            #pragma comment(lib, "7zmd.lib")
+        #endif
+    #endif
 #else
-#pragma comment(lib, "7z64mt.lib")
-#endif
-#else
-#ifdef _DEBUG
-#pragma comment(lib, "7zmtd.lib")
-#else
-#pragma comment(lib, "7zmt.lib")
-#endif
+    #if defined __amd64__ || defined __x86_64__ || defined _WIN64 || defined _M_X64
+        #ifdef _DEBUG
+            #pragma comment(lib, "7z64mtd.lib")
+        #else
+            #pragma comment(lib, "7z64mt.lib")
+        #endif
+    #else
+        #ifdef _DEBUG
+            #pragma comment(lib, "7zmtd.lib")
+        #else
+            #pragma comment(lib, "7zmt.lib")
+        #endif
+    #endif
 #endif
 #endif
 
