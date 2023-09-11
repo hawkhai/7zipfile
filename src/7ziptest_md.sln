@@ -3,16 +3,16 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31911.196
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "7ziptest", "7ziptest\7ziptest.vcxproj", "{6B7E65C1-9AB4-4D04-8761-EA15C959AC5C}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "7ziptest", "7ziptest\7ziptest_md.vcxproj", "{6B7E65C1-9AB4-4D04-8761-EA15C959AC5C}"
 	ProjectSection(ProjectDependencies) = postProject
 		{F8767F95-8E3F-4DBD-8956-01B9825CDDEB} = {F8767F95-8E3F-4DBD-8956-01B9825CDDEB}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "7zLib", "..\lzma2301\C\Util\7z\7zLib.vcxproj", "{F8767F95-8E3F-4DBD-8956-01B9825CDDEB}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "7zLib", "..\lzma2301\C\Util\7z\7zLib_md.vcxproj", "{F8767F95-8E3F-4DBD-8956-01B9825CDDEB}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Alone", "..\lzma2301\CPP\7zip\Bundles\Alone7z\Alone.vcxproj", "{60B9A506-83B8-4132-A885-62D19AF536EB}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Alone", "..\lzma2301\CPP\7zip\Bundles\Alone7z\Alone_md.vcxproj", "{60B9A506-83B8-4132-A885-62D19AF536EB}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AloneLib", "..\lzma2301\CPP\7zip\Bundles\Alone7z\AloneLib.vcxproj", "{9614831F-F2E7-4230-BA18-3D4FADB40F13}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AloneLib", "..\lzma2301\CPP\7zip\Bundles\Alone7z\AloneLib_md.vcxproj", "{9614831F-F2E7-4230-BA18-3D4FADB40F13}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

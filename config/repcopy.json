@@ -24,32 +24,32 @@
     ],
     "strrep": [
         {
-            "strdst": "<RuntimeLibrary>MultiThreaded</RuntimeLibrary>",
-            "strsrc": "<RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>"
+            "source": "<RuntimeLibrary>MultiThreaded</RuntimeLibrary>",
+            "target": "<RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>"
         },
         {
-            "strdst": "<RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>",
-            "strsrc": "<RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>"
+            "source": "<RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>",
+            "target": "<RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>"
         },
         {
-            "strdst": "..\\bin\\win",
-            "strsrc": "..\\bin\\md\\win"
+            "source": "..\\bin\\win",
+            "target": "..\\bin\\md\\win"
         },
         {
-            "strdst": "7ziptest.vcxproj",
-            "strsrc": "7ziptest_md.vcxproj"
+            "source": "7ziptest.vcxproj",
+            "target": "7ziptest_md.vcxproj"
         },
         {
-            "strdst": "7zLib.vcxproj",
-            "strsrc": "7zLib_md.vcxproj"
+            "source": "7zLib.vcxproj",
+            "target": "7zLib_md.vcxproj"
         },
         {
-            "strdst": "Alone.vcxproj",
-            "strsrc": "Alone_md.vcxproj"
+            "source": "Alone.vcxproj",
+            "target": "Alone_md.vcxproj"
         },
         {
-            "strdst": "AloneLib.vcxproj",
-            "strsrc": "AloneLib_md.vcxproj"
+            "source": "AloneLib.vcxproj",
+            "target": "AloneLib_md.vcxproj"
         }
     ]
 }
