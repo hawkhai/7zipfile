@@ -29,6 +29,12 @@
 #define SZ_ERROR_ARCHIVE 16
 #define SZ_ERROR_NO_ARCHIVE 17
 
+#if defined __amd64__ || defined __x86_64__ || defined _WIN64 || defined _M_X64
+#define intx long long
+#else
+#define intx int
+#endif
+
 #ifdef __cplusplus
 
 #include <string>
@@ -51,7 +57,7 @@ class KZ7DllWrap : public IZ7DllInterface {
             return L".\\";
         }
         std::wstring strexe = tpath;
-        int index = strexe.rfind(L'\\');
+        intx index = strexe.rfind(L'\\');
         if (index <= 0) {
             return L".\\";
         }

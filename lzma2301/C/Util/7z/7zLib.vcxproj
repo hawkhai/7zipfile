@@ -79,7 +79,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <TargetName>7z</TargetName>
+    <TargetName>7z64</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>.\Debug\</OutDir>
@@ -89,7 +89,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <TargetName>7zd</TargetName>
+    <TargetName>7z64d</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Midl>
@@ -170,8 +170,8 @@ copy "$(TargetDir)$(TargetName).dll" "$(SolutionDir)$(Configuration)\" /y</Comma
       <OutputFile>.\Release/7z.bsc</OutputFile>
     </Bscmake>
     <PostBuildEvent>
-      <Command>copy "$(TargetDir)$(TargetName).dll" "$(TargetDir)..\..\..\..\..\bin\win32-dll\" /y
-copy "$(TargetDir)$(TargetName).pdb" "$(TargetDir)..\..\..\..\..\bin\win32-dll\" /y
+      <Command>copy "$(TargetDir)$(TargetName).dll" "$(TargetDir)..\..\..\bin\win64-dll\" /y
+copy "$(TargetDir)$(TargetName).pdb" "$(TargetDir)..\..\..\bin\win64-dll\" /y
 copy "$(TargetDir)$(TargetName).dll" "$(SolutionDir)$(Configuration)\" /y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -253,8 +253,8 @@ copy "$(TargetDir)$(TargetName).dll" "$(SolutionDir)$(Configuration)\" /y</Comma
       <OutputFile>.\Debug/7z.bsc</OutputFile>
     </Bscmake>
     <PostBuildEvent>
-      <Command>copy "$(TargetDir)$(TargetName).dll" "$(TargetDir)..\..\..\..\..\bin\win32-dll\" /y
-copy "$(TargetDir)$(TargetName).pdb" "$(TargetDir)..\..\..\..\..\bin\win32-dll\" /y
+      <Command>copy "$(TargetDir)$(TargetName).dll" "$(TargetDir)..\..\..\bin\win64-dll\" /y
+copy "$(TargetDir)$(TargetName).pdb" "$(TargetDir)..\..\..\bin\win64-dll\" /y
 copy "$(TargetDir)$(TargetName).dll" "$(SolutionDir)$(Configuration)\" /y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>

@@ -3,3 +3,4 @@
 *.user
 *.ncb
 *.suo
+/x64
