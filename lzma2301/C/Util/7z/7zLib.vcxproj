@@ -137,7 +137,7 @@
     <OutDir>.\Release\</OutDir>
     <IntDir>.\Release\</IntDir>
     <LinkIncremental>false</LinkIncremental>
-    <TargetName>7z</TargetName>
+    <TargetName>7zmt</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -145,7 +145,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelStatic|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <TargetName>7z64</TargetName>
+    <TargetName>7z64mt</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>.\Debug\</OutDir>
@@ -157,7 +157,7 @@
     <OutDir>.\Debug\</OutDir>
     <IntDir>.\Debug\</IntDir>
     <LinkIncremental>true</LinkIncremental>
-    <TargetName>7zd</TargetName>
+    <TargetName>7zmtd</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -165,7 +165,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DbgStatic|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <TargetName>7z64d</TargetName>
+    <TargetName>7z64mtd</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Midl>
@@ -247,9 +247,9 @@ copy "$(TargetDir)$(TargetName).dll" "$(SolutionDir)$(Configuration)\" /y</Comma
       <OutputFile>.\Release/7z.bsc</OutputFile>
     </Bscmake>
     <PostBuildEvent>
-      <Command>copy "$(TargetDir)$(TargetName).dll" "$(TargetDir)..\..\..\..\..\bin\win32-dll\" /y
-copy "$(TargetDir)$(TargetName).pdb" "$(TargetDir)..\..\..\..\..\bin\win32-dll\" /y
-copy "$(TargetDir)$(TargetName).dll" "$(SolutionDir)$(Configuration)\" /y</Command>
+      <Command>copy "$(TargetDir)$(TargetName).lib" "$(TargetDir)..\..\..\..\..\bin\win32-lib\" /y
+copy "$(TargetDir)$(TargetName).pdb" "$(TargetDir)..\..\..\..\..\bin\win32-lib\" /y
+</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -331,9 +331,9 @@ copy "$(TargetDir)$(TargetName).dll" "$(SolutionDir)$(Configuration)\" /y</Comma
       <OutputFile>.\Release/7z.bsc</OutputFile>
     </Bscmake>
     <PostBuildEvent>
-      <Command>copy "$(TargetDir)$(TargetName).dll" "$(TargetDir)..\..\..\bin\win64-dll\" /y
-copy "$(TargetDir)$(TargetName).pdb" "$(TargetDir)..\..\..\bin\win64-dll\" /y
-copy "$(TargetDir)$(TargetName).dll" "$(SolutionDir)$(Configuration)\" /y</Command>
+      <Command>copy "$(TargetDir)$(TargetName).lib" "$(TargetDir)..\..\..\bin\win64-lib\" /y
+copy "$(TargetDir)$(TargetName).pdb" "$(TargetDir)..\..\..\bin\win64-lib\" /y
+</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -416,9 +416,9 @@ copy "$(TargetDir)$(TargetName).dll" "$(SolutionDir)$(Configuration)\" /y</Comma
       <OutputFile>.\Debug/7z.bsc</OutputFile>
     </Bscmake>
     <PostBuildEvent>
-      <Command>copy "$(TargetDir)$(TargetName).dll" "$(TargetDir)..\..\..\..\..\bin\win32-dll\" /y
-copy "$(TargetDir)$(TargetName).pdb" "$(TargetDir)..\..\..\..\..\bin\win32-dll\" /y
-copy "$(TargetDir)$(TargetName).dll" "$(SolutionDir)$(Configuration)\" /y</Command>
+      <Command>copy "$(TargetDir)$(TargetName).lib" "$(TargetDir)..\..\..\..\..\bin\win32-lib\" /y
+copy "$(TargetDir)$(TargetName).pdb" "$(TargetDir)..\..\..\..\..\bin\win32-lib\" /y
+</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -498,9 +498,9 @@ copy "$(TargetDir)$(TargetName).dll" "$(SolutionDir)$(Configuration)\" /y</Comma
       <OutputFile>.\Debug/7z.bsc</OutputFile>
     </Bscmake>
     <PostBuildEvent>
-      <Command>copy "$(TargetDir)$(TargetName).dll" "$(TargetDir)..\..\..\bin\win64-dll\" /y
-copy "$(TargetDir)$(TargetName).pdb" "$(TargetDir)..\..\..\bin\win64-dll\" /y
-copy "$(TargetDir)$(TargetName).dll" "$(SolutionDir)$(Configuration)\" /y</Command>
+      <Command>copy "$(TargetDir)$(TargetName).lib" "$(TargetDir)..\..\..\bin\win64-lib\" /y
+copy "$(TargetDir)$(TargetName).pdb" "$(TargetDir)..\..\..\bin\win64-lib\" /y
+</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

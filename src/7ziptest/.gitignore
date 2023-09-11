@@ -4,3 +4,5 @@
 /include
 /bin
 /x64
+/RelStatic
+/DbgStatic
