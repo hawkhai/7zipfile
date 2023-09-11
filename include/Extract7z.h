@@ -35,6 +35,22 @@
 #define intx int
 #endif
 
+#ifdef Z7STATIC_IMPORT
+#if defined __amd64__ || defined __x86_64__ || defined _WIN64 || defined _M_X64
+#ifdef _DEBUG
+#pragma comment(lib, "7z64mtd.lib")
+#else
+#pragma comment(lib, "7z64mt.lib")
+#endif
+#else
+#ifdef _DEBUG
+#pragma comment(lib, "7zmtd.lib")
+#else
+#pragma comment(lib, "7zmt.lib")
+#endif
+#endif
+#endif
+
 #ifdef __cplusplus
 
 #include <string>
@@ -119,6 +135,12 @@ public:
     }
 
     KZ7DllWrap() {
+
+#ifdef Z7STATIC_IMPORT
+        m_interface = CreateEntry();
+        return;
+#endif
+
 #if defined __amd64__ || defined __x86_64__ || defined _WIN64 || defined _M_X64
 #ifdef _DEBUG
         const TCHAR* libPath = L"7z64d.dll";
