@@ -92,6 +92,9 @@
       <SubSystem>Console</SubSystem>
       <AdditionalDependencies>odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>copy "$(TargetDir)$(TargetName).exe" "$(TargetDir)..\..\..\..\..\..\bin\win32-dll\" /y</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -131,6 +134,9 @@
       <SubSystem>Console</SubSystem>
       <AdditionalDependencies>odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>copy "$(TargetDir)$(TargetName).exe" "$(TargetDir)..\..\..\..\..\..\bin\win32-dll\" /y</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\C\7zCrc.c">

@@ -65,7 +65,7 @@
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
       <PreprocessorDefinitions>Z7_DLL_EXPOTS;NDEBUG;WIN32;_CONSOLE;UNICODE;Z7_PPMD_SUPPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>Precomp.h</PrecompiledHeaderFile>
@@ -107,7 +107,7 @@ copy "$(TargetDir)$(TargetName).dll" "$(SolutionDir)$(Configuration)\" /y</Comma
       <PreprocessorDefinitions>Z7_DLL_EXPOTS;_DEBUG;_SZ_ALLOC_DEBUG2;_SZ_NO_INT_64_A;WIN32;_CONSOLE;UNICODE;Z7_PPMD_SUPPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>Precomp.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>.\Debug/7z.pch</PrecompiledHeaderOutputFile>
