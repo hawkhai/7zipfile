@@ -1,0 +1,55 @@
+{
+    "filelist": [],
+    "filemap": [
+        {
+            "from": "..\\src\\7ziptest\\7ziptest.vcxproj",
+            "to": "..\\src\\7ziptest\\7ziptest_md.vcxproj"
+        },
+        {
+            "from": "..\\lzma2301\\C\\Util\\7z\\7zLib.vcxproj",
+            "to": "..\\lzma2301\\C\\Util\\7z\\7zLib_md.vcxproj"
+        },
+        {
+            "from": "..\\lzma2301\\CPP\\7zip\\Bundles\\Alone7z\\Alone.vcxproj",
+            "to": "..\\lzma2301\\CPP\\7zip\\Bundles\\Alone7z\\Alone_md.vcxproj"
+        },
+        {
+            "from": "..\\lzma2301\\CPP\\7zip\\Bundles\\Alone7z\\AloneLib.vcxproj",
+            "to": "..\\lzma2301\\CPP\\7zip\\Bundles\\Alone7z\\AloneLib_md.vcxproj"
+        },
+        {
+            "from": "..\\src\\7ziptest.sln",
+            "to": "..\\src\\7ziptest_md.sln"
+        }
+    ],
+    "strrep": [
+        {
+            "strdst": "<RuntimeLibrary>MultiThreaded</RuntimeLibrary>",
+            "strsrc": "<RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>"
+        },
+        {
+            "strdst": "<RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>",
+            "strsrc": "<RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>"
+        },
+        {
+            "strdst": "..\\bin\\win",
+            "strsrc": "..\\bin\\md\\win"
+        },
+        {
+            "strdst": "7ziptest.vcxproj",
+            "strsrc": "7ziptest_md.vcxproj"
+        },
+        {
+            "strdst": "7zLib.vcxproj",
+            "strsrc": "7zLib_md.vcxproj"
+        },
+        {
+            "strdst": "Alone.vcxproj",
+            "strsrc": "Alone_md.vcxproj"
+        },
+        {
+            "strdst": "AloneLib.vcxproj",
+            "strsrc": "AloneLib_md.vcxproj"
+        }
+    ]
+}
