@@ -176,8 +176,7 @@
       <AdditionalDependencies>odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>copy "$(TargetDir)$(TargetName).exe" "$(TargetDir)..\..\..\..\..\..\bin\win32-dll\" /y
-copy "$(TargetDir)$(TargetName).exe" "$(TargetDir)..\..\..\..\..\..\bin\" /y</Command>
+      <Command>copy "$(TargetDir)$(TargetName).exe" "$(TargetDir)..\..\..\..\..\..\bin\win32-lib\" /y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -261,8 +260,7 @@ copy "$(TargetDir)$(TargetName).exe" "$(TargetDir)..\..\..\..\..\..\bin\" /y</Co
       <AdditionalDependencies>odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>copy "$(TargetDir)$(TargetName).exe" "$(TargetDir)..\..\..\..\..\..\bin\win32-dll\" /y
-copy "$(TargetDir)$(TargetName).exe" "$(TargetDir)..\..\..\..\..\..\bin\" /y</Command>
+      <Command>copy "$(TargetDir)$(TargetName).exe" "$(TargetDir)..\..\..\..\..\..\bin\win32-lib\" /y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
