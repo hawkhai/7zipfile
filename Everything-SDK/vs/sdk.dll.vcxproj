@@ -179,7 +179,7 @@
     </ClCompile>
     <Lib>
       <OutputFile>$(OutDir)Everything.lib</OutputFile>
-      <ModuleDefinitionFile>..\src\Everything.def</ModuleDefinitionFile>
+      <ModuleDefinitionFile>..\src\Everything32.def</ModuleDefinitionFile>
       <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
     </Lib>
   </ItemDefinitionGroup>
@@ -227,7 +227,7 @@
     </PreLinkEvent>
     <Link>
       <OutputFile>$(OutDir)Everything32.dll</OutputFile>
-      <ModuleDefinitionFile>D:\dev\everything\sdk\src\Everything.def</ModuleDefinitionFile>
+      <ModuleDefinitionFile>..\src\Everything32.def</ModuleDefinitionFile>
     </Link>
     <PostBuildEvent>
       <Command />
@@ -257,7 +257,7 @@
     </ClCompile>
     <Link>
       <OutputFile>$(OutDir)Everything64.dll</OutputFile>
-      <ModuleDefinitionFile>D:\dev\everything\sdk\src\Everything.def</ModuleDefinitionFile>
+      <ModuleDefinitionFile>..\src\Everything64.def</ModuleDefinitionFile>
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
   </ItemDefinitionGroup>
@@ -294,7 +294,7 @@
       <ShowProgress>NotSet</ShowProgress>
       <OutputFile>$(OutDir)Everything.dll</OutputFile>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
-      <ModuleDefinitionFile>everything.def</ModuleDefinitionFile>
+      <ModuleDefinitionFile>..\src\everything32.def</ModuleDefinitionFile>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <GenerateMapFile>true</GenerateMapFile>
       <SubSystem>Windows</SubSystem>
@@ -379,7 +379,7 @@
       <ShowProgress>NotSet</ShowProgress>
       <OutputFile>$(OutDir)Everything.dll</OutputFile>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
-      <ModuleDefinitionFile>everything.def</ModuleDefinitionFile>
+      <ModuleDefinitionFile>..\src\everything32.def</ModuleDefinitionFile>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <GenerateMapFile>true</GenerateMapFile>
       <SubSystem>Windows</SubSystem>

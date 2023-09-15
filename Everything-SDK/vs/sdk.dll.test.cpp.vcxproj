@@ -180,7 +180,7 @@
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>lib\Everything32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\lib\Everything32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -227,7 +227,7 @@
       <Command />
     </PreLinkEvent>
     <Link>
-      <AdditionalDependencies>lib\Everything32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\lib\Everything32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ShowProgress>NotSet</ShowProgress>
       <ModuleDefinitionFile />
       <GenerateDebugInformation>false</GenerateDebugInformation>
@@ -314,7 +314,7 @@
       <ShowProgress>NotSet</ShowProgress>
       <OutputFile>$(OutDir)Everything.dll</OutputFile>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
-      <ModuleDefinitionFile>everything.def</ModuleDefinitionFile>
+      <ModuleDefinitionFile>..\src\everything32.def</ModuleDefinitionFile>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <GenerateMapFile>true</GenerateMapFile>
       <SubSystem>Windows</SubSystem>
@@ -398,7 +398,7 @@
       <ShowProgress>NotSet</ShowProgress>
       <OutputFile>$(OutDir)Everything.dll</OutputFile>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
-      <ModuleDefinitionFile>everything.def</ModuleDefinitionFile>
+      <ModuleDefinitionFile>..\src\everything32.def</ModuleDefinitionFile>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <GenerateMapFile>true</GenerateMapFile>
       <SubSystem>Windows</SubSystem>
