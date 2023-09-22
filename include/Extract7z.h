@@ -88,17 +88,17 @@ extern "C" Z7DLLEXPORT IZ7DllInterface* CreateEntry();
 class KZ7DllWrap : public IZ7DllInterface {
 
     static std::wstring getCurrentDir() {
-        wchar_t tpath[MAX_PATH] = { 0 };
-        DWORD dwRet = GetModuleFileNameW(NULL, tpath, MAX_PATH);
+        wchar_t fpath[MAX_PATH] = { 0 };
+        DWORD dwRet = GetModuleFileNameW(NULL, fpath, MAX_PATH);
         if (dwRet == 0) {
             return L".\\";
         }
-        std::wstring strexe = tpath;
-        intx index = strexe.rfind(L'\\');
+        std::wstring fdir = fpath;
+        intx index = fdir.rfind(L'\\');
         if (index <= 0) {
             return L".\\";
         }
-        return strexe.substr(0, index + 1);
+        return fdir.substr(0, index + 1);
 }
     static HINSTANCE loadLibrary(const wchar_t* libPath) {
         std::wstring curdir = getCurrentDir();
