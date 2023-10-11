@@ -86,7 +86,7 @@ __interface IZ7DllInterface {
     virtual int SetLogPrint(BOOL value) = 0;
 };
 
-extern "C" Z7DLLEXPORT IZ7DllInterface* CreateEntry();
+extern "C" Z7DLLEXPORT IZ7DllInterface* CreateEntry7z();
 
 class KZ7DllWrap : public IZ7DllInterface {
 
@@ -161,7 +161,7 @@ public:
     KZ7DllWrap() {
 
 #ifdef Z7STATIC_IMPORT
-        m_interface = CreateEntry();
+        m_interface = CreateEntry7z();
         return;
 #endif
 
@@ -188,7 +188,7 @@ public:
         }
 
         typedef IZ7DllInterface* (*CreateEntryFunc)();
-        CreateEntryFunc fptr = (CreateEntryFunc)GetProcAddress(m_hDLL, "CreateEntry");
+        CreateEntryFunc fptr = (CreateEntryFunc)GetProcAddress(m_hDLL, "CreateEntry7z");
         if (fptr == nullptr) {
             int err = GetLastError();
             err;

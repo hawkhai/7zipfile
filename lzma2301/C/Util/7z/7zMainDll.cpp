@@ -18,6 +18,6 @@ public:
     }
 };
 
-IZ7DllInterface* CreateEntry() {
+IZ7DllInterface* CreateEntry7z() {
     return new KDllInstance();
 }
