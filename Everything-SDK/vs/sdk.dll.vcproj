@@ -746,7 +746,7 @@
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm"
 			>
 			<File
-				RelativePath="..\src\Everything.c"
+				RelativePath="..\src\Everything.cpp"
 				>
 			</File>
 			<File

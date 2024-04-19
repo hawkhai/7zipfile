@@ -37,6 +37,8 @@
 #include "../include/Everything.h"
 #include "../ipc/Everything_IPC.h"
 
+#include <shellapi.h>
+
 // return copydata code
 #define _EVERYTHING_COPYDATA_QUERYREPLY		0
 
