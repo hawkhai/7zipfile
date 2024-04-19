@@ -512,7 +512,7 @@ static LRESULT WINAPI _Everything_window_proc(HWND hwnd,UINT msg,WPARAM wParam,L
 					{
 						_Everything_FreeLists();
 						
-						_Everything_List2 = _Everything_Alloc(cds->cbData);
+						_Everything_List2 = (EVERYTHING_IPC_LIST2*)_Everything_Alloc(cds->cbData);
 						
 						if (_Everything_List2)
 						{
@@ -778,7 +778,7 @@ static BOOL _Everything_SendIPCQuery2(HWND everything_hwnd)
 	}
 	
 	// alloc
-	query = _Everything_Alloc(size);
+	query = (EVERYTHING_IPC_QUERY2*)_Everything_Alloc(size);
 	
 	if (query)
 	{
@@ -1443,7 +1443,7 @@ LPCWSTR EVERYTHINGAPI Everything_GetResultFileNameW(DWORD dwIndex)
 	{
 		if (_Everything_IsValidResultIndex(dwIndex))
 		{
-			ret = _Everything_GetRequestData(dwIndex,EVERYTHING_REQUEST_FILE_NAME);
+			ret = (LPCWSTR)_Everything_GetRequestData(dwIndex,EVERYTHING_REQUEST_FILE_NAME);
 			
 			if (ret)
 			{
@@ -1498,7 +1498,7 @@ LPCSTR EVERYTHINGAPI Everything_GetResultFileNameA(DWORD dwIndex)
 	{
 		if (_Everything_IsValidResultIndex(dwIndex))
 		{
-			ret = _Everything_GetRequestData(dwIndex,EVERYTHING_REQUEST_FILE_NAME);
+			ret = (LPCSTR)_Everything_GetRequestData(dwIndex,EVERYTHING_REQUEST_FILE_NAME);
 			
 			if (ret)
 			{
@@ -1553,7 +1553,7 @@ LPCWSTR EVERYTHINGAPI Everything_GetResultPathW(DWORD dwIndex)
 	{
 		if (_Everything_IsValidResultIndex(dwIndex))
 		{
-			ret = _Everything_GetRequestData(dwIndex,EVERYTHING_REQUEST_PATH);
+			ret = (LPCWSTR)_Everything_GetRequestData(dwIndex,EVERYTHING_REQUEST_PATH);
 			
 			if (ret)
 			{
@@ -1608,7 +1608,7 @@ LPCSTR EVERYTHINGAPI Everything_GetResultPathA(DWORD dwIndex)
 	{
 		if (_Everything_IsValidResultIndex(dwIndex))
 		{
-			ret = _Everything_GetRequestData(dwIndex,EVERYTHING_REQUEST_PATH);
+			ret = (LPCSTR)_Everything_GetRequestData(dwIndex,EVERYTHING_REQUEST_PATH);
 			
 			if (ret)
 			{
@@ -1841,11 +1841,11 @@ DWORD EVERYTHINGAPI Everything_GetResultFullPathNameW(DWORD dwIndex,LPWSTR wbuf,
 				// we got the full path and name already.
 				if (_Everything_IsUnicodeQuery)		
 				{
-					len = _Everything_CopyW(wbuf,wbuf_size_in_wchars,0,full_path_and_name);
+					len = _Everything_CopyW(wbuf,wbuf_size_in_wchars,0, (LPCWSTR)full_path_and_name);
 				}
 				else
 				{
-					len = _Everything_CopyWFromA(wbuf,wbuf_size_in_wchars,0,full_path_and_name);
+					len = _Everything_CopyWFromA(wbuf,wbuf_size_in_wchars,0,(LPCSTR)full_path_and_name);
 				}
 			}
 			else
@@ -1870,30 +1870,30 @@ DWORD EVERYTHINGAPI Everything_GetResultFullPathNameW(DWORD dwIndex,LPWSTR wbuf,
 
 						if (_Everything_IsUnicodeQuery)		
 						{
-							len = _Everything_CopyW(wbuf,wbuf_size_in_wchars,0,path);
+							len = _Everything_CopyW(wbuf,wbuf_size_in_wchars,0, (LPCWSTR)path);
 
 							if (len)
 							{
-								len = _Everything_CopyW(wbuf,wbuf_size_in_wchars,len,_Everything_IsSchemeNameW(path) ? L"/" : L"\\");
+								len = _Everything_CopyW(wbuf,wbuf_size_in_wchars,len,_Everything_IsSchemeNameW((LPCWSTR)path) ? L"/" : L"\\");
 							}
 						}
 						else
 						{
-							len = _Everything_CopyWFromA(wbuf,wbuf_size_in_wchars,0,path);
+							len = _Everything_CopyWFromA(wbuf,wbuf_size_in_wchars,0, (LPCSTR)path);
 
 							if (len)
 							{
-								len = _Everything_CopyW(wbuf,wbuf_size_in_wchars,len,_Everything_IsSchemeNameA(path) ? L"/" : L"\\");
+								len = _Everything_CopyW(wbuf,wbuf_size_in_wchars,len,_Everything_IsSchemeNameA((LPCSTR)path) ? L"/" : L"\\");
 							}
 						}
 
 						if (_Everything_IsUnicodeQuery)		
 						{
-							len = _Everything_CopyW(wbuf,wbuf_size_in_wchars,len,name);
+							len = _Everything_CopyW(wbuf,wbuf_size_in_wchars,len, (LPCWSTR)name);
 						}
 						else
 						{
-							len = _Everything_CopyWFromA(wbuf,wbuf_size_in_wchars,len,name);
+							len = _Everything_CopyWFromA(wbuf,wbuf_size_in_wchars,len, (LPCSTR)name);
 						}						
 					}
 					else
@@ -1989,11 +1989,11 @@ DWORD EVERYTHINGAPI Everything_GetResultFullPathNameA(DWORD dwIndex,LPSTR buf,DW
 				// we got the full path and name already.
 				if (_Everything_IsUnicodeQuery)		
 				{
-					len = _Everything_CopyAFromW(buf,bufsize,0,full_path_and_name);
+					len = _Everything_CopyAFromW(buf,bufsize,0, (LPCWSTR)full_path_and_name);
 				}
 				else
 				{
-					len = _Everything_CopyA(buf,bufsize,0,full_path_and_name);
+					len = _Everything_CopyA(buf,bufsize,0, (LPCSTR)full_path_and_name);
 				}
 			}
 			else
@@ -2018,11 +2018,11 @@ DWORD EVERYTHINGAPI Everything_GetResultFullPathNameA(DWORD dwIndex,LPSTR buf,DW
 
 						if (_Everything_IsUnicodeQuery)		
 						{
-							len = _Everything_CopyAFromW(buf,bufsize,0,path);
+							len = _Everything_CopyAFromW(buf,bufsize,0, (LPCWSTR)path);
 						}
 						else
 						{
-							len = _Everything_CopyA(buf,bufsize,0,path);
+							len = _Everything_CopyA(buf,bufsize,0, (LPCSTR)path);
 						}
 							
 						if (len)
@@ -2032,11 +2032,11 @@ DWORD EVERYTHINGAPI Everything_GetResultFullPathNameA(DWORD dwIndex,LPSTR buf,DW
 
 						if (_Everything_IsUnicodeQuery)		
 						{
-							len = _Everything_CopyAFromW(buf,bufsize,len,name);
+							len = _Everything_CopyAFromW(buf,bufsize,len, (LPCWSTR)name);
 						}
 						else
 						{
-							len = _Everything_CopyA(buf,bufsize,len,name);
+							len = _Everything_CopyA(buf,bufsize,len, (LPCSTR)name);
 						}						
 					}
 					else
@@ -2089,7 +2089,7 @@ BOOL EVERYTHINGAPI Everything_IsQueryReply(UINT message,WPARAM wParam,LPARAM lPa
 				{
 					_Everything_FreeLists();
 
-					_Everything_List2 = _Everything_Alloc(cds->cbData);
+					_Everything_List2 = (EVERYTHING_IPC_LIST2*)_Everything_Alloc(cds->cbData);
 						
 					if (_Everything_List2)
 					{
@@ -2598,7 +2598,7 @@ static void _Everything_ChangeWindowMessageFilter(HWND hwnd)
 		
 		if (_Everything_user32_hdll)
 		{
-			_Everything_pChangeWindowMessageFilterEx = (BOOL (WINAPI *)(HWND hWnd,UINT message,DWORD action,_EVERYTHING_PCHANGEFILTERSTRUCT pChangeFilterStruct))GetProcAddress(_Everything_user32_hdll,"ChangeWindowMessageFilterEx");
+			_Everything_pChangeWindowMessageFilterEx = (BOOL (WINAPI *)(HWND hWnd,UINT message,DWORD action,_EVERYTHING_PCHANGEFILTERSTRUCT pChangeFilterStruct))GetProcAddress((HMODULE)_Everything_user32_hdll,"ChangeWindowMessageFilterEx");
 		}
 	
 		_Everything_GotChangeWindowMessageFilterEx = 1;
@@ -2623,7 +2623,7 @@ static LPCWSTR _Everything_GetResultRequestStringW(DWORD dwIndex,DWORD dwRequest
 	{
 		if (_Everything_IsValidResultIndex(dwIndex))
 		{
-			str = _Everything_GetRequestData(dwIndex,dwRequestType);
+			str = (LPCWSTR)_Everything_GetRequestData(dwIndex,dwRequestType);
 			if (str)
 			{
 				// skip length in characters.
@@ -2663,7 +2663,7 @@ static LPCSTR _Everything_GetResultRequestStringA(DWORD dwIndex,DWORD dwRequestT
 	{
 		if (_Everything_IsValidResultIndex(dwIndex))
 		{
-			str = _Everything_GetRequestData(dwIndex,dwRequestType);
+			str = (LPCSTR)_Everything_GetRequestData(dwIndex,dwRequestType);
 			if (str)
 			{
 				// skip length in characters.
@@ -3007,14 +3007,14 @@ UINT EVERYTHINGAPI Everything_MSIExitAndStopService(void *msihandle)
 		{
 			SC_HANDLE service_handle;
 			
-			service_handle = OpenService(scm_handle,L"Everything",SERVICE_QUERY_CONFIG|SERVICE_QUERY_STATUS);
+			service_handle = OpenService((SC_HANDLE)scm_handle,L"Everything",SERVICE_QUERY_CONFIG|SERVICE_QUERY_STATUS);
 							
 			if (service_handle) 
 			{
 				QUERY_SERVICE_CONFIG *service_config;
 				DWORD bytes_needed;
 				
-				service_config = _Everything_Alloc(8192);
+				service_config = (QUERY_SERVICE_CONFIG*)_Everything_Alloc(8192);
 				if (service_config)
 				{
 					if (QueryServiceConfig(service_handle,service_config,8192,&bytes_needed))
@@ -3115,7 +3115,7 @@ UINT EVERYTHINGAPI Everything_MSIExitAndStopService(void *msihandle)
 				CloseServiceHandle(service_handle);
 			}
 
-			CloseServiceHandle(scm_handle);
+			CloseServiceHandle((SC_HANDLE)scm_handle);
 		}	
 	}
 	
@@ -3133,7 +3133,7 @@ UINT EVERYTHINGAPI Everything_MSIStartService(void *msihandle)
 	{
 		SC_HANDLE service_handle;
 		
-		service_handle = OpenService(scm_handle,L"Everything",SERVICE_START);
+		service_handle = OpenService((SC_HANDLE)scm_handle,L"Everything",SERVICE_START);
 						
 		if (service_handle) 
 		{
@@ -3142,7 +3142,7 @@ UINT EVERYTHINGAPI Everything_MSIStartService(void *msihandle)
 			CloseServiceHandle(service_handle);
 		}
 
-		CloseServiceHandle(scm_handle);
+		CloseServiceHandle((SC_HANDLE)scm_handle);
 	}	
 	
 	return 0;
@@ -3202,7 +3202,7 @@ BOOL EVERYTHINGAPI Everything_SetRunCountFromFileNameW(LPCWSTR lpFileName,DWORD 
 	
 	len = _Everything_StringLengthW(lpFileName);
 	
-	run_history = _Everything_Alloc(sizeof(EVERYTHING_IPC_RUN_HISTORY) + ((len + 1) * sizeof(WCHAR)));
+	run_history = (EVERYTHING_IPC_RUN_HISTORY*)_Everything_Alloc(sizeof(EVERYTHING_IPC_RUN_HISTORY) + ((len + 1) * sizeof(WCHAR)));
 	
 	if (run_history)
 	{
@@ -3240,7 +3240,7 @@ BOOL EVERYTHINGAPI Everything_SetRunCountFromFileNameA(LPCSTR lpFileName,DWORD d
 	
 	len = _Everything_StringLengthA(lpFileName);
 	
-	run_history = _Everything_Alloc(sizeof(EVERYTHING_IPC_RUN_HISTORY) + (len + 1));
+	run_history = (EVERYTHING_IPC_RUN_HISTORY*)_Everything_Alloc(sizeof(EVERYTHING_IPC_RUN_HISTORY) + (len + 1));
 	
 	if (run_history)
 	{
