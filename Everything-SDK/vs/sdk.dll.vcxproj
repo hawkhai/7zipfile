@@ -237,7 +237,7 @@
       <Command />
     </PreLinkEvent>
     <Link>
-      <OutputFile>$(OutDir)Everything32.dll</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <ModuleDefinitionFile>..\src\Everything32.def</ModuleDefinitionFile>
     </Link>
     <PostBuildEvent>
@@ -270,7 +270,7 @@
       <AdditionalOptions>/we4013 /we4047 /we4133 /we4172 /we4431 /we4456 /we4457 /we4477 /we4700 /we4715 /we4716 /we4723 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
-      <OutputFile>$(OutDir)Everything64.dll</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <ModuleDefinitionFile>..\src\Everything64.def</ModuleDefinitionFile>
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
@@ -309,7 +309,7 @@
     </ProjectReference>
     <Link>
       <ShowProgress>NotSet</ShowProgress>
-      <OutputFile>$(OutDir)Everything.dll</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <ModuleDefinitionFile>..\src\everything32.def</ModuleDefinitionFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -349,14 +349,15 @@
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <AdditionalOptions>/we4013 /we4047 /we4133 /we4172 /we4431 /we4456 /we4457 /we4477 /we4700 /we4715 /we4716 /we4723 %(AdditionalOptions)</AdditionalOptions>
+      <CompileAs>CompileAsC</CompileAs>
     </ClCompile>
     <ProjectReference>
       <LinkLibraryDependencies>true</LinkLibraryDependencies>
     </ProjectReference>
     <Link>
-      <AdditionalDependencies>HTMLHelp.lib;msimg32.lib;UxTheme.lib;comctl32.lib;Ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>comctl32.lib;HTMLHelp.lib;msimg32.lib;UxTheme.lib;Ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ShowProgress>NotSet</ShowProgress>
-      <OutputFile>$(OutDir)Everything.dll</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
@@ -400,7 +401,7 @@
     </ProjectReference>
     <Link>
       <ShowProgress>NotSet</ShowProgress>
-      <OutputFile>$(OutDir)Everything.dll</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <ModuleDefinitionFile>..\src\everything32.def</ModuleDefinitionFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -440,14 +441,15 @@
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <AdditionalOptions>/we4013 /we4047 /we4133 /we4172 /we4431 /we4456 /we4457 /we4477 /we4700 /we4715 /we4716 /we4723 %(AdditionalOptions)</AdditionalOptions>
+      <CompileAs>CompileAsC</CompileAs>
     </ClCompile>
     <ProjectReference>
       <LinkLibraryDependencies>true</LinkLibraryDependencies>
     </ProjectReference>
     <Link>
-      <AdditionalDependencies>HTMLHelp.lib;msimg32.lib;UxTheme.lib;comctl32.lib;Ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>comctl32.lib;HTMLHelp.lib;msimg32.lib;UxTheme.lib;Ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ShowProgress>NotSet</ShowProgress>
-      <OutputFile>$(OutDir)Everything.dll</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
