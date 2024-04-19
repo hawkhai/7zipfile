@@ -1,4 +1,4 @@
-
+#pragma warning(disable: 2440)
 //
 // Copyright (C) 2022 David Carpenter
 // 
@@ -38,6 +38,7 @@
 #include "../ipc/Everything_IPC.h"
 
 #include <shellapi.h>
+#include <stdlib.h> //包含qsort函数的头文件
 
 // return copydata code
 #define _EVERYTHING_COPYDATA_QUERYREPLY		0
