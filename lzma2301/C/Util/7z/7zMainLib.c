@@ -1,4 +1,4 @@
-/* 7zMain.c - Test application for 7z Decoder
+ï»¿/* 7zMain.c - Test application for 7z Decoder
 2023-04-04 : Igor Pavlov : Public domain */
 
 #include "Precomp.h"
@@ -552,8 +552,8 @@ static void GetAttribString(UInt32 wa, BoolInt isDir, char* s)
 
 //int Z7_CDECL main(int numargs, char *args[])
     /*
-        pSrcFile : .7zÎÄ¼şÃû£¨¿É°üº¬Â·¾¶£©
-        pDstPath : ½âÑ¹ÖÁÄ¿±êÎÄ¼ş¼Ğ£¨±ØĞëÓÃ¾ø¶ÔÂ·¾¶£¬Ä¿Â¼±ØĞë´æÔÚ£¬Èç¹ûÎª¿Õ£¬Ö±½Ó½âÑ¹µ½µ±Ç°Ä¿Â¼£©
+        pSrcFile : .7zæ–‡ä»¶åï¼ˆå¯åŒ…å«è·¯å¾„ï¼‰
+        pDstPath : è§£å‹è‡³ç›®æ ‡æ–‡ä»¶å¤¹ï¼ˆå¿…é¡»ç”¨ç»å¯¹è·¯å¾„ï¼Œç›®å½•å¿…é¡»å­˜åœ¨ï¼Œå¦‚æœä¸ºç©ºï¼Œç›´æ¥è§£å‹åˆ°å½“å‰ç›®å½•ï¼‰
     */
 int Extract7z(const wchar_t* pSrcFile, const wchar_t* pDstPath)
 {

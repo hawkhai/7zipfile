@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #ifndef WIN32_LEAN_AND_MEAN
 #define WIN32_LEAN_AND_MEAN
 #endif
@@ -17,7 +17,7 @@
 
 #define Z7DLL_VERSION 1
 
-// �� 7z ���濽�������ġ�
+// 从 7z 里面拷贝出来的。
 #define SZ_OK 0
 
 #define SZ_ERROR_DATA 1
@@ -208,7 +208,7 @@ public:
         }
         m_interface->Release();
         m_interface = nullptr;
-        // m_hDLL ���ͷ��ˡ�
+        // m_hDLL 不释放了。
     }
 
 private:
@@ -223,8 +223,8 @@ extern "C" {
 #endif
 
     /*
-        pSrcFile : .7z�ļ������ɰ���·����
-        pDstPath : ��ѹ��Ŀ���ļ��У������þ���·����Ŀ¼������ڣ����Ϊ�գ�ֱ�ӽ�ѹ����ǰĿ¼��
+        pSrcFile : .7z文件名（可包含路径）
+        pDstPath : 解压至目标文件夹（必须用绝对路径，目录必须存在，如果为空，直接解压到当前目录）
     */
     int Z7DLLEXPORT Extract7z(const wchar_t* pSrcFile, const wchar_t* pDstPath);
 
