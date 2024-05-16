@@ -283,6 +283,7 @@ copy "$(TargetDir)$(TargetName).pdb" "$(TargetDir)..\..\..\..\..\bin\md\win32-li
     <Link>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <SubSystem>Console</SubSystem>
+      <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <Bscmake>
       <SuppressStartupBanner>true</SuppressStartupBanner>
@@ -325,6 +326,7 @@ copy "$(TargetDir)$(TargetName).dll" "$(SolutionDir)$(Configuration)\" /y</Comma
     <Link>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <SubSystem>Console</SubSystem>
+      <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <Bscmake>
       <SuppressStartupBanner>true</SuppressStartupBanner>
@@ -451,6 +453,7 @@ copy "$(TargetDir)$(TargetName).pdb" "$(TargetDir)..\..\..\..\..\bin\md\win32-li
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
+      <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <Bscmake>
       <SuppressStartupBanner>true</SuppressStartupBanner>
@@ -492,6 +495,7 @@ copy "$(TargetDir)$(TargetName).dll" "$(SolutionDir)$(Configuration)\" /y</Comma
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
+      <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <Bscmake>
       <SuppressStartupBanner>true</SuppressStartupBanner>
