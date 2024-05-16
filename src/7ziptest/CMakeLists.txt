@@ -3,13 +3,13 @@ set(PROJECT_NAME 7ziptest_md)
 ################################################################################
 # Source groups
 ################################################################################
-set(
+set(7ziptestcpp
     "7ziptest.cpp"
 )
-source_group("源文件" FILES ${})
+source_group("源文件" FILES ${7ziptestcpp})
 
 set(ALL_FILES
-    ${}
+    ${7ziptestcpp}
 )
 
 ################################################################################
@@ -192,9 +192,9 @@ endif()
 ################################################################################
 # Dependencies
 ################################################################################
-add_dependencies(${PROJECT_NAME}
-    7zLib
-)
+#add_dependencies(${PROJECT_NAME}
+#    7zLib
+#)
 
 if("${CMAKE_VS_PLATFORM_NAME}" STREQUAL "x64")
     target_link_directories(${PROJECT_NAME} PRIVATE
