@@ -3,55 +3,60 @@ set(PROJECT_NAME 7zLib_md)
 ################################################################################
 # Source groups
 ################################################################################
-set(Headers
-    "../../7z.h"
-    "../../7zAlloc.h"
-    "../../7zBuf.h"
-    "../../7zCrc.h"
-    "../../7zFile.h"
-    "../../7zTypes.h"
-    "../../7zWindows.h"
-    "../../Bcj2.h"
-    "../../Bra.h"
-    "../../Compiler.h"
-    "../../CpuArch.h"
-    "../../Delta.h"
-    "../../Lzma2Dec.h"
-    "../../LzmaDec.h"
-    "../../Ppmd.h"
-    "../../Ppmd7.h"
-    "Precomp.h"
+set(no_group_source_files
+    "7zMainDll.cpp"
+    "7zMainLib.c"
 )
-source_group("Headers" FILES ${Headers})
+source_group("" FILES ${no_group_source_files})
 
-set(Sources
+set(Common
+    "../../7z.h"
     "../../7zAlloc.c"
+    "../../7zAlloc.h"
     "../../7zArcIn.c"
     "../../7zBuf.c"
+    "../../7zBuf.h"
     "../../7zCrc.c"
+    "../../7zCrc.h"
     "../../7zCrcOpt.c"
     "../../7zDec.c"
     "../../7zFile.c"
+    "../../7zFile.h"
     "../../7zStream.c"
+    "../../7zTypes.h"
+    "../../7zWindows.h"
     "../../Bcj2.c"
+    "../../Bcj2.h"
     "../../Bra.c"
+    "../../Bra.h"
     "../../Bra86.c"
     "../../BraIA64.c"
     "../../CpuArch.c"
+    "../../CpuArch.h"
     "../../Delta.c"
+    "../../Delta.h"
     "../../Lzma2Dec.c"
+    "../../Lzma2Dec.h"
     "../../LzmaDec.c"
+    "../../LzmaDec.h"
+    "../../Ppmd.h"
     "../../Ppmd7.c"
+    "../../Ppmd7.h"
     "../../Ppmd7Dec.c"
-    "7zMainDll.cpp"
-    "7zMainLib.c"
-    "Precomp.c"
 )
-source_group("Sources" FILES ${Sources})
+source_group("Common" FILES ${Common})
+
+set(Spec
+    "../../Compiler.h"
+    "Precomp.c"
+    "Precomp.h"
+)
+source_group("Spec" FILES ${Spec})
 
 set(ALL_FILES
-    ${Headers}
-    ${Sources}
+    ${no_group_source_files}
+    ${Common}
+    ${Spec}
 )
 
 ################################################################################
