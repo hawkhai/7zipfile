@@ -100,7 +100,6 @@ elseif("${CMAKE_VS_PLATFORM_NAME}" STREQUAL "x86")
             "Z7STATIC_IMPORT;"
             "NDEBUG"
         ">"
-        "WIN32;"
         "_CONSOLE;"
         "UNICODE;"
         "_UNICODE"
